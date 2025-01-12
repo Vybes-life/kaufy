@@ -1001,7 +1001,7 @@ e.forEach((slide, index) => {
     });
 });
       }
-      if (!o() && document.querySelector(".scrollPattern")) {
+      if (document.querySelector(".scrollPattern")) {
         const e = document.querySelector(".content"),
           t = document.querySelector(".scrollPattern"),
           o = t.querySelector(".patternTop"),
