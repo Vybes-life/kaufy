@@ -2511,17 +2511,21 @@ html.no-js #smooth-wrapper {
   position: absolute;
   right: 0;
   top: 0;
-  z-index: -1
+  z-index: -1;
+  pointer-events: none;
+  display: block;
 }
 
 .scrollPattern img {
   height: 100%;
   opacity: .5;
-  width: 100%
+  width: 100%;
+  object-fit: cover;
 }
 
 .scrollPattern .patternTop {
-  top: -102%
+  top: -102%;
+  
 }
 
 .scrollPattern .patternBottom,
@@ -7491,9 +7495,15 @@ ul.service-list li:last-of-type a {
 }
 
 @media only screen and (max-width:1024px) {
-  /* .scrollPattern {
-    display: none
-  } */
+  .scrollPattern {
+    display: block;
+    opacity:0.3;
+  }
+
+  .scrollPattern .patternTop,
+  .scrollPattern .patternBottom {
+    height: 100vh;
+  }
 
   #logo {
     height: 60px;
@@ -7981,10 +7991,17 @@ ul.service-list li:last-of-type a {
     height: 16px
   }
 
-  /* .scrollPattern {
-    display: none
-  } */
+  
+  .scrollPattern {
+    display: block;
+    opacity:0.3;
+  }
 
+  .scrollPattern .patternTop,
+  .scrollPattern .patternBottom {
+    height: 100vh;
+  }
+  
   .section-title,
   .w-title {
     font-size: 10px;
