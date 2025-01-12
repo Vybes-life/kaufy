@@ -1001,29 +1001,49 @@ e.forEach((slide, index) => {
     });
 });
       }
-      if (document.querySelector(".scrollPattern")) {
-        const e = document.querySelector(".content"),
-          t = document.querySelector(".scrollPattern"),
-          o = t.querySelector(".patternTop"),
-          a = t.querySelector(".patternBottom");
-        let n = e.getBoundingClientRect().top,
-          s = e.getBoundingClientRect().top;
-        const r = function () {
-          const t = e.getBoundingClientRect().top,
-            i = t - n,
-            c = Math.abs(Math.round(5 * i) / 100),
-            l = Math.min(Math.max(c, 0), 1);
-          (newValue = e.getBoundingClientRect().top),
-            s < newValue
-              ? (gsap.to(o, { y: 100 * l + "%" }), gsap.to(a, { y: 0 }))
-              : s > newValue &&
-                (gsap.to(o, { y: 0 }), gsap.to(a, { y: 100 * -l + "%" })),
-            (s = newValue),
-            (n = t),
-            requestAnimationFrame(r);
-        };
-        r();
-      }
+      // Find the scroll pattern section and modify:
+
+if (document.querySelector(".scrollPattern")) {
+  const e = document.querySelector(".content"),
+        t = document.querySelector(".scrollPattern"),
+        o = t.querySelector(".patternTop"),
+        a = t.querySelector(".patternBottom");
+
+  // Remove mobile check, initialize for all devices
+  const r = function () {
+    const t = e.getBoundingClientRect().top,
+          i = t - n,
+          c = Math.abs(Math.round(5 * i) / 100),
+          l = Math.min(Math.max(c, 0), 1);
+    
+    // Add touch support
+    let touchY = e.getBoundingClientRect().top;
+    newValue = touchY;
+    
+    s < newValue
+      ? (gsap.to(o, { y: 100 * l + "%", touchAction: "pan-y" }), 
+         gsap.to(a, { y: 0, touchAction: "pan-y" }))
+      : s > newValue &&
+        (gsap.to(o, { y: 0, touchAction: "pan-y" }), 
+         gsap.to(a, { y: 100 * -l + "%", touchAction: "pan-y" }));
+    
+    s = newValue;
+    n = t;
+    requestAnimationFrame(r);
+  };
+
+  // Initialize pattern
+  r();
+
+  // Add responsive sizing
+  const resizePattern = () => {
+    const vh = window.innerHeight * 0.01;
+    t.style.setProperty('--vh', `${vh}px`);
+  };
+
+  window.addEventListener('resize', resizePattern);
+  resizePattern();
+}
       if (document.querySelector("#fixed-cta")) {
         const e = document.querySelector("#fixed-cta"),
           o = e.querySelector("i");
