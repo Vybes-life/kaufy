@@ -906,6 +906,10 @@
     text-align: center !important
   }
 
+  .fal{
+    margin-bottom: 7vh;
+  }
+
   .xs-full {
     margin-left: 0;
     width: 100%
@@ -1228,7 +1232,7 @@
 }
 
 .FontTitle {
-  font-family: 'Orbitron', Impact, sans-serif;
+  font-family: TT Tunnels Bold, Impact, sans-serif;
   font-weight: 400;
 }
 
@@ -1241,7 +1245,7 @@
 }
 
 .FontTitle2 {
-  font-family: 'Orbitron', Impact, sans-serif;
+  font-family: Tt Tunnels Bold, Impact, sans-serif;
   font-weight: 400;
 }
 
@@ -2951,7 +2955,8 @@ h4 .dot {
 
 .bs-220 {
   font-size: clamp(90px, 15.27vw, 20vw);
-  line-height: 1.1
+  line-height: 1.1;
+  
 }
 
 .bs-240 {
@@ -3872,9 +3877,17 @@ article.testimonial h3 {
 }
 
 .home #hero .bs-220 {
-  font-size: clamp(80px, 10.8vw, 300px);
+  font-size: clamp(90px, 10.8vw, 300px);
   line-height: 1.1;
   
+}
+
+.ek {
+  margin-bottom: 10vh;
+}
+
+.fal{
+  margin-bottom: 7vh;
 }
 
 .home #hero .bs-220>div:first-of-type {
@@ -3882,7 +3895,7 @@ article.testimonial h3 {
   grid-template-columns: 2fr 1fr;
   
   justify-content:space-evenly;
-  align-items: center;
+  
 }
 
 .home #hero .bs-hero-small {
@@ -4065,7 +4078,7 @@ article.testimonial h3 {
 
   .home #hero #hero-work-link a {
     margin-bottom: 0;
-    padding: 1.2em 1.75em
+    padding: 0.6em 1.75em 0.6em 1em
   }
 
   .home #hero #hero-work-link a>span:nth-of-type(3) {
@@ -8218,9 +8231,22 @@ ul.service-list li:last-of-type a {
     display: none
   }
 
-  .home #hero>div {
-    padding-bottom: 20.833vw
+  .ek{
+    margin-bottom:0vh;
   }
+
+  .home #hero>div {
+
+    padding-bottom: 24vw;
+  }
+  .fal{
+    margin-bottom: 0vh;
+  }
+
+  .ek{
+    margin-bottom: 0vh;
+  }
+  
 
   .home #hero .bs-hero-small {
     font-size: 12px
