@@ -3070,7 +3070,7 @@ e.forEach((slide, index) => {
     }
     m.classList.contains("init") &&
       (MainThreeScene.changeTexture(window.ASSETS.length, !1),
-      MainThreeScene.setParams({ mainBall: { reflectionColor:255 } }));
+      MainThreeScene.setParams({ mainBall: { reflectionColor:2003199 } }));
   };
   z();
   const W = function () {
