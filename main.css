@@ -1504,7 +1504,7 @@ body.dynamic input:-webkit-autofill:hover {
 
 @media only screen and (max-width:1024px) {
   body.dynamic #newsletter {
-    background-color: var(--colorB)
+    background-color: transparent
   }
 
   body.dynamic #newsletter h2 {
@@ -2511,21 +2511,17 @@ html.no-js #smooth-wrapper {
   position: absolute;
   right: 0;
   top: 0;
-  z-index: -1;
-  pointer-events: none;
-  display: block;
+  z-index: -1
 }
 
 .scrollPattern img {
   height: 100%;
   opacity: .5;
-  width: 100%;
-  object-fit: cover;
+  width: 100%
 }
 
 .scrollPattern .patternTop {
-  top: -102%;
-  
+  top: -102%
 }
 
 .scrollPattern .patternBottom,
@@ -2884,7 +2880,7 @@ h6 {
 h2 .dot,
 h3 .dot,
 h4 .dot {
-  background-image: url(https://buzzworthystudio.com/242536776d164b4840d5.svg);
+  /* background-image: url(https://buzzworthystudio.com/242536776d164b4840d5.svg); */
   background-position: bottom;
   background-repeat: no-repeat;
   display: inline-block;
@@ -7495,15 +7491,9 @@ ul.service-list li:last-of-type a {
 }
 
 @media only screen and (max-width:1024px) {
-  .scrollPattern {
-    display: block;
-    opacity:0.3;
-  }
-
-  .scrollPattern .patternTop,
-  .scrollPattern .patternBottom {
-    height: 100vh;
-  }
+  /* .scrollPattern {
+    display: none
+  } */
 
   #logo {
     height: 60px;
@@ -7808,19 +7798,20 @@ ul.service-list li:last-of-type a {
 
   #newsletter {
     border-radius: 4.1666vw;
-    padding: 8.3332vw 4.1666vw
+    padding: 2.3332vw 2.1666vw;
+    width:100vw;
   }
 
   #newsletter,
   #newsletter input {
-    background-color: #222650
+    background-color: transparent
   }
 
   #newsletter .arrow-link {
-    height: 50px;
+    height: 70px;
     margin-right: 5px;
     padding: 10px;
-    width: 50px;
+    width: 70px;
     z-index: 1
   }
 }
@@ -7839,11 +7830,11 @@ ul.service-list li:last-of-type a {
 
 @media only screen and (max-width:767px) {
   #newsletter .arrow-link i {
-    flex: 0 0 80%
+    flex: 2% 0 100%
   }
 
   .arrow-link {
-    font-size: 12px
+    font-size: 24px
   }
 
   #drag-ico {
@@ -7991,17 +7982,10 @@ ul.service-list li:last-of-type a {
     height: 16px
   }
 
-  
-  .scrollPattern {
-    display: block;
-    opacity:0.3;
-  }
+  /* .scrollPattern {
+    display: none
+  } */
 
-  .scrollPattern .patternTop,
-  .scrollPattern .patternBottom {
-    height: 100vh;
-  }
-  
   .section-title,
   .w-title {
     font-size: 10px;
