@@ -2256,8 +2256,8 @@ html.no-js #smooth-wrapper {
 
 #webglBubble {
   height: 100%;
-  left: 20%;
-  top: -20%;
+  left: 20vw;
+  top: -20vh;
   width: 100%;
   z-index: 2
 }
@@ -3937,7 +3937,7 @@ article.testimonial h3 {
 
 .home #hero #hero-work-link a {
   align-items: center;
-  border: 1px solid rgba(238, 238, 242, .1);
+  border: 1px solid rgba(238, 238, 242, .2);
   border-radius: 5px;
   display: flex;
   justify-content: space-between;
@@ -4073,6 +4073,7 @@ article.testimonial h3 {
   .home #hero #hero-work-link {
     bottom: 0;
     left: 4.1666vw;
+    width:90vw;
     position: absolute
   }
 
@@ -7504,9 +7505,9 @@ ul.service-list li:last-of-type a {
 }
 
 @media only screen and (max-width:1024px) {
-  /* .scrollPattern {
-    display: none
-  } */
+  .scrollPattern {
+    display: block
+  }
 
   #logo {
     height: 60px;
@@ -7995,9 +7996,9 @@ ul.service-list li:last-of-type a {
     height: 16px
   }
 
-  /* .scrollPattern {
-    display: none
-  } */
+  .scrollPattern {
+    display: block
+  }
 
   .section-title,
   .w-title {
