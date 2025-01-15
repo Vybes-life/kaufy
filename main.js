@@ -3217,7 +3217,7 @@ F.to(D, {
     // Initialize audio with mobile support
     initAudio();
     forceAudioPlay();
-   }
+   
     // Add additional interaction triggers
     ['click', 'touchstart', 'touchend', 'scroll'].forEach(event => {
       document.addEventListener(event, () => {
@@ -3238,7 +3238,7 @@ F.to(D, {
         document.body.dispatchEvent(clickEvent);
         
         
-      }, 500);
+      }, 500);}
   }
 }, "-=.5"),
     F.to(["#logo", "#usp", "#hamburger", "#fixed-cta"], {
