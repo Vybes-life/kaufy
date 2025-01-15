@@ -31,6 +31,41 @@
     window.matchMedia("(max-width: 1024px)").matches &&
       (window.addEventListener("resize", N), N());
   }
+  let audioContext, audioElement, audioSource;
+
+// Add audio initialization function
+function initAudio() {
+  audioContext = new (window.AudioContext || window.webkitAudioContext)();
+  audioElement = document.getElementById('kaufy-audio');
+  audioSource = audioContext.createMediaElementSource(audioElement);
+  audioSource.connect(audioContext.destination);
+  
+  audioElement.volume = 0;
+  audioElement.loop = false;
+  audioElement.muted = false;
+}
+
+// Add audio play function with force unlock
+function forceAudioPlay() {
+  if (audioContext.state === 'suspended') {
+    audioContext.resume();
+  }
+  
+  const playAttempt = setInterval(() => {
+    audioElement.play()
+      .then(() => {
+        clearInterval(playAttempt);
+        gsap.to(audioElement, {
+          volume: 0.5,
+          duration: 2,
+          ease: "power2.inOut"
+        });
+      })
+      .catch(() => {
+        // Keep trying
+      });
+  }, 300);
+}
   function o() {
     return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
       navigator.userAgent
@@ -3119,57 +3154,26 @@ e.forEach((slide, index) => {
     F.to(D, {
   opacity: 0,
   duration: 1,
-  pointerEvents: "none", 
+  pointerEvents: "none",
   ease: "power4.inOut",
   onStart: W,
   onComplete: () => {
-    // Original code
     o() || A.paused(!1);
     D.remove();
 
-    // Add audio playback
-    const audioElement = document.getElementById('kaufy-audio');
-    if (audioElement) {
-      // Start with volume 0 and fade in
-      audioElement.volume = 0;
-      
-      // Try to play with user interaction handling
-      const playPromise = audioElement.play();
-      
-      if (playPromise !== undefined) {
-        playPromise
-          .then(() => {
-            // Fade in volume over 2 seconds
-            gsap.to(audioElement, {
-              volume: 0.5,
-              duration: 2,
-              ease: "power2.inOut"
-            });
-          })
-          .catch(error => {
-            console.log("Audio autoplay prevented:", error);
-            // Create a play button as fallback
-            const playButton = document.createElement('button');
-            playButton.innerHTML = "Play Audio";
-            playButton.style.position = "fixed";
-            playButton.style.bottom = "20px";
-            playButton.style.right = "20px";
-            playButton.style.zIndex = "999";
-            
-            playButton.addEventListener('click', () => {
-              audioElement.play();
-              gsap.to(audioElement, {
-                volume: 0.5,
-                duration: 2,
-                ease: "power2.inOut"
-              });
-              playButton.remove();
-            });
-            
-            document.body.appendChild(playButton);
-          });
-      }
-    }
+    // Initialize and play audio
+    initAudio();
+    forceAudioPlay();
+
+    // Additional triggers for stubborn browsers
+    ['click', 'touchstart', 'touchend'].forEach(event => {
+      document.addEventListener(event, () => {
+        if (audioContext.state === 'suspended') {
+          audioContext.resume();
+          forceAudioPlay();
+        }
+      }, { once: true });
+    });
   }
 }, "-=.5"),
     F.to(["#logo", "#usp", "#hamburger", "#fixed-cta"], {
