@@ -3116,20 +3116,62 @@ e.forEach((slide, index) => {
       duration: 0.6,
       ease: "power4.inOut",
     }),
-    F.to(
-      D,
-      {
-        opacity: 0,
-        duration: 1,
-        pointerEvents: "none",
-        ease: "power4.inOut",
-        onStart: W,
-        onComplete: () => {
-          o() || A.paused(!1), D.remove();
-        },
-      },
-      "-=.5"
-    ),
+    F.to(D, {
+  opacity: 0,
+  duration: 1,
+  pointerEvents: "none", 
+  ease: "power4.inOut",
+  onStart: W,
+  onComplete: () => {
+    // Original code
+    o() || A.paused(!1);
+    D.remove();
+
+    // Add audio playback
+    const audioElement = document.getElementById('kaufy-audio');
+    if (audioElement) {
+      // Start with volume 0 and fade in
+      audioElement.volume = 0;
+      
+      // Try to play with user interaction handling
+      const playPromise = audioElement.play();
+      
+      if (playPromise !== undefined) {
+        playPromise
+          .then(() => {
+            // Fade in volume over 2 seconds
+            gsap.to(audioElement, {
+              volume: 0.5,
+              duration: 2,
+              ease: "power2.inOut"
+            });
+          })
+          .catch(error => {
+            console.log("Audio autoplay prevented:", error);
+            // Create a play button as fallback
+            const playButton = document.createElement('button');
+            playButton.innerHTML = "Play Audio";
+            playButton.style.position = "fixed";
+            playButton.style.bottom = "20px";
+            playButton.style.right = "20px";
+            playButton.style.zIndex = "999";
+            
+            playButton.addEventListener('click', () => {
+              audioElement.play();
+              gsap.to(audioElement, {
+                volume: 0.5,
+                duration: 2,
+                ease: "power2.inOut"
+              });
+              playButton.remove();
+            });
+            
+            document.body.appendChild(playButton);
+          });
+      }
+    }
+  }
+}, "-=.5"),
     F.to(["#logo", "#usp", "#hamburger", "#fixed-cta"], {
       opacity: 1,
       delay: 0.6,
