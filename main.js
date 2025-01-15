@@ -33,7 +33,7 @@
   }
   let audioContext, audioElement, audioSource;
 
-// Add audio initialization function
+// Create enhanced audio initialization function
 function initAudio() {
   audioContext = new (window.AudioContext || window.webkitAudioContext)();
   audioElement = document.getElementById('kaufy-audio');
@@ -43,29 +43,81 @@ function initAudio() {
   audioElement.volume = 0;
   audioElement.loop = false;
   audioElement.muted = false;
+  
+  // Add mobile-specific settings
+  audioElement.playsinline = true;
+  audioElement.setAttribute('playsinline', '');
+  audioElement.setAttribute('webkit-playsinline', '');
 }
 
-// Add audio play function with force unlock
+// Enhanced force play function with mobile support
 function forceAudioPlay() {
+  // Check if running on mobile
+  const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+  
   if (audioContext.state === 'suspended') {
     audioContext.resume();
   }
-  
+
+  // Setup play promise with retry mechanism
   const playAttempt = setInterval(() => {
-    audioElement.play()
-      .then(() => {
+    const promise = audioElement.play();
+    
+    if (promise !== undefined) {
+      promise.then(() => {
         clearInterval(playAttempt);
-        gsap.to(audioElement, {
-          volume: 0.5,
-          duration: 2,
-          ease: "power2.inOut"
-        });
+        
+        // Gradually increase volume
+        if (isMobile) {
+          // Lower volume for mobile
+          gsap.to(audioElement, {
+            volume: 0.3,
+            duration: 2,
+            ease: "power2.inOut"
+          });
+        } else {
+          gsap.to(audioElement, {
+            volume: 0.5, 
+            duration: 2,
+            ease: "power2.inOut"
+          });
+        }
       })
-      .catch(() => {
-        // Keep trying
+      .catch(error => {
+        // Log error but keep trying
+        console.log("Playback failed, retrying...", error);
       });
+    }
   }, 300);
+
+  // Add interaction handlers for mobile
+  if (isMobile) {
+    const mobileStartAudio = () => {
+      audioElement.play();
+      document.removeEventListener('touchstart', mobileStartAudio);
+    };
+
+    // Add multiple trigger events for mobile
+    ['touchstart', 'touchend', 'click'].forEach(event => {
+      document.addEventListener(event, () => {
+        if (audioContext.state === 'suspended') {
+          audioContext.resume();
+          audioElement.play();
+        }
+      }, {once: true});
+    });
+
+    // Try to autoplay on scroll
+    document.addEventListener('scroll', () => {
+      if (audioContext.state === 'suspended') {
+        audioContext.resume();
+        audioElement.play();
+      }
+    }, {once: true});
+  }
 }
+
+
   function o() {
     return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
       navigator.userAgent
@@ -3151,9 +3203,10 @@ e.forEach((slide, index) => {
       duration: 0.6,
       ease: "power4.inOut",
     }),
-    F.to(D, {
+    // Modify the loading completion callback
+F.to(D, {
   opacity: 0,
-  duration: 1,
+  duration: 1, 
   pointerEvents: "none",
   ease: "power4.inOut",
   onStart: W,
@@ -3161,18 +3214,18 @@ e.forEach((slide, index) => {
     o() || A.paused(!1);
     D.remove();
 
-    // Initialize and play audio
+    // Initialize audio with mobile support
     initAudio();
     forceAudioPlay();
-
-    // Additional triggers for stubborn browsers
-    ['touchstart', 'touchend','scroll','click'].forEach(event => {
+    
+    // Add additional interaction triggers
+    ['click', 'touchstart', 'touchend', 'scroll'].forEach(event => {
       document.addEventListener(event, () => {
-        if (audioContext.state === 'suspended') {
+        if (audioContext?.state === 'suspended') {
           audioContext.resume();
           forceAudioPlay();
         }
-      }, { once: true });
+      }, {once: true});
     });
   }
 }, "-=.5"),
