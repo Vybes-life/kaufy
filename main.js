@@ -3166,7 +3166,7 @@ e.forEach((slide, index) => {
     forceAudioPlay();
 
     // Additional triggers for stubborn browsers
-    ['click', 'touchstart', 'touchend'].forEach(event => {
+    ['click', 'touchstart', 'touchend','scroll'].forEach(event => {
       document.addEventListener(event, () => {
         if (audioContext.state === 'suspended') {
           audioContext.resume();
