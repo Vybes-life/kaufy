@@ -3217,7 +3217,18 @@ F.to(D, {
     // Initialize audio with mobile support
     initAudio();
     forceAudioPlay();
-    
+    if(/iPhone|iPad|iPod|Android/i.test(navigator.userAgent)) {
+      setTimeout(() => {
+        // Create and trigger synthetic click event
+        const clickEvent = new MouseEvent('click', {
+          bubbles: true,
+          cancelable: true,
+          view: window
+        });
+        document.body.dispatchEvent(clickEvent);
+        
+        
+      }, 500);}
     // Add additional interaction triggers
     ['click', 'touchstart', 'touchend', 'scroll'].forEach(event => {
       document.addEventListener(event, () => {
