@@ -3217,7 +3217,17 @@ F.to(D, {
     // Initialize audio with mobile support
     initAudio();
     forceAudioPlay();
-    if(/iPhone|iPad|iPod|Android/i.test(navigator.userAgent)) {
+   }
+    // Add additional interaction triggers
+    ['click', 'touchstart', 'touchend', 'scroll'].forEach(event => {
+      document.addEventListener(event, () => {
+        if (audioContext?.state === 'suspended') {
+          audioContext.resume();
+          forceAudioPlay();
+        }
+      }, {once: true});
+    });
+     if(/iPhone|iPad|iPod|Android/i.test(navigator.userAgent)) {
       setTimeout(() => {
         // Create and trigger synthetic click event
         const clickEvent = new MouseEvent('click', {
@@ -3228,16 +3238,7 @@ F.to(D, {
         document.body.dispatchEvent(clickEvent);
         
         
-      }, 500);}
-    // Add additional interaction triggers
-    ['click', 'touchstart', 'touchend', 'scroll'].forEach(event => {
-      document.addEventListener(event, () => {
-        if (audioContext?.state === 'suspended') {
-          audioContext.resume();
-          forceAudioPlay();
-        }
-      }, {once: true});
-    });
+      }, 500);
   }
 }, "-=.5"),
     F.to(["#logo", "#usp", "#hamburger", "#fixed-cta"], {
