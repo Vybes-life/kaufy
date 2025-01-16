@@ -3359,7 +3359,7 @@ ul li {
 }
 
 i.circle-tag {
-  border-radius: 50%;
+  border-radius: 0%;
   display: block;
   height: 1.2em;
   left: 0;
