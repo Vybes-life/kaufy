@@ -861,7 +861,7 @@ function forceAudioPlay() {
             scrub: !0,
           },
         });
-        s.to(t, { yPercent: (e, t) => 20 * e -35, stagger: 1, duration: 1 }),
+        s.to(t, { yPercent: (e, t) => 20 * e -20, stagger: 1, duration: 1 }),
           s.to(o, { backgroundColor: "#171A37", duration: 1, stagger: 1 }, "<"),
           s.to(a, { yPercent: 60, duration: 1 }, "-=2");
       }
