@@ -861,7 +861,7 @@ function forceAudioPlay() {
             scrub: !0,
           },
         });
-        s.to(t, { yPercent: (e, t) => 20 * e -20, stagger: 1, duration: 1 }),
+        s.to(t, { yPercent: (e, t) => 20 * e - 35, stagger: 1, duration: 1 }),
           s.to(o, { backgroundColor: "#171A37", duration: 1, stagger: 1 }, "<"),
           s.to(a, { yPercent: 60, duration: 1 }, "-=2");
       }
@@ -1116,8 +1116,7 @@ e.forEach((slide, index) => {
     // Force recalculation for mobile
     newValue = window.pageYOffset || document.documentElement.scrollTop;
     
-    // Debug scroll values
-    console.log("Scroll values:", {newValue, s, l});
+    
 
     // Add touch support
     if (s < newValue) {
@@ -1978,7 +1977,7 @@ e.forEach((slide, index) => {
               const t = e.querySelector("figure i"),
                 a = e.querySelector("figure:not(.nextP)"),
                 n = e.querySelector("a");
-              let s = e.querySelector(".work-listing article figure svg image"),
+              let s = e.querySelector(".work-listing article figure svg foreignObject"),
                 r = e.querySelector("svg mask path");
               gsap.set(s, { y: -40, filter: "brightness(10)" });
               const i = [
@@ -2012,7 +2011,7 @@ e.forEach((slide, index) => {
                   r,
                   {
                     morphSVG:
-    "M0 20C0 8.95429 8.95431 0 20 0H640C651.046 0 660 8.95431 660 20V640C660 651.046 651.054 660 640.008 660C620 660 580 630 528 645C476.451 660 447.549 640 396 650C344.451 660 315.549 640 264 645C212.451 650 183.549 635 132 640C96.4552 645 47.169 660 19.9915 660C8.94585 660 0 651.046 0 640V20Z",
+    "M0 20C0 8.95429 8.95431 0 20 0H640C651.046 0 660 8.95431 660 20V640C660 651.046 651.054 660 640.008 660C612.831 660 563.545 660 528 660C476.451 660 447.549 660 396 660C344.451 660 315.549 660 264 660C212.451 660 183.549 660 132 660C96.4552 660 47.169 660 19.9915 660C8.94585 660 0 651.046 0 640V20Z",
                     duration: 0.7,
                     ease: "power4.out",
                   },
