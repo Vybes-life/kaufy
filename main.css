@@ -4285,13 +4285,13 @@ article.testimonial h3 {
   transform: rotateX(15deg);
   padding: 4px;
   
-  /* Dark Metallic effect */
+  /* Dark Metallic effect with #222650 tones */
   background-image: 
     linear-gradient(145deg, 
-      rgba(40,40,40,0.9) 0%,
-      rgba(25,25,25,0.95) 47%,
-      rgba(15,15,15,0.98) 53%,
-      rgba(10,10,10,1) 100%
+      rgba(34, 38, 80, 0.9) 0%, /* Darkened #222650 */
+      rgba(25, 28, 60, 0.95) 47%, /* Darker shade */
+      rgba(15, 18, 40, 0.98) 53%, /* Even darker */
+      rgba(10, 12, 30, 1) 100%    /* Almost black */
     );
   
   border-radius: 20px;
@@ -4299,18 +4299,18 @@ article.testimonial h3 {
   
   /* Enhanced shadows for lift effect */
   box-shadow: 
-    /* Outer glow */
+    /* Outer glow - adjusted to a subtle dark shadow */
     0 20px 50px rgba(0,0,0,0.8),
-    /* Top edge lift */
-    0 -4px 8px rgba(255,255,255,0.1),
+    /* Top edge lift - made more subtle */
+    0 -4px 8px rgba(255,255,255,0.05),
     /* Bottom edge lift */
     0 4px 8px rgba(0,0,0,0.5),
-    /* Left edge lift */
-    -4px 0 8px rgba(255,255,255,0.05),
+    /* Left edge lift - subtle */
+    -4px 0 8px rgba(255,255,255,0.02),
     /* Right edge lift */
     4px 0 8px rgba(0,0,0,0.5),
-    /* Inner metallic sheen */
-    inset 0 2px 3px rgba(255,255,255,0.1),
+    /* Inner metallic sheen - very subtle */
+    inset 0 2px 3px rgba(255,255,255,0.05),
     inset 0 -2px 3px rgba(0,0,0,0.2);
 }
 
@@ -4321,12 +4321,13 @@ article.testimonial h3 {
   left: 0;
   right: 0;
   bottom: 0;
+  /* Shine effect - adjusted for dark background */
   background: linear-gradient(
     45deg,
     transparent 0%,
-    rgba(255,255,255,0.03) 45%,
-    rgba(255,255,255,0.05) 50%,
-    rgba(255,255,255,0.03) 55%,
+    rgba(255,255,255,0.02) 45%, /* Very subtle white */
+    rgba(255,255,255,0.03) 50%, /* Slightly brighter */
+    rgba(255,255,255,0.02) 55%, /* Back to subtle */
     transparent 100%
   );
   animation: shine 4s infinite;
@@ -4340,7 +4341,8 @@ article.testimonial h3 {
   height: calc(100% + 6px);
   top: -3px;
   left: -3px;
-  background: linear-gradient(45deg, #1a1a1a, #2a2a2a);
+  /* Gradient using variations of #222650 */
+  background: linear-gradient(45deg, #1a1d40, #2a2f60); 
   border-radius: inherit;
   z-index: -1;
   transform: translateZ(-2px);
@@ -4350,29 +4352,33 @@ article.testimonial h3 {
   position: relative;
   width: 90%;
   height: 90%;
-  background: linear-gradient(145deg, #1a1a1a, #2a2a2a);
+  /* Gradient with #222650 shades */
+  background: linear-gradient(145deg, #1a1d40, #2a2f60);
   border-radius: 20px;
   padding: 2rem;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  border: 1px solid #999;
+  /* Border color adjusted */
+  border: 1px solid #555b80; 
   transition: all 0.3s ease;
   overflow: hidden;
 }
 
 .card:hover {
   transform: translateY(-5px);
-  box-shadow: 0 0 30px rgba(30, 144, 255, 0.3);
+  /* Hover shadow - adjusted for dark theme */
+  box-shadow: 0 0 30px rgba(34, 38, 80, 0.5); 
 }
 
 .card-icon {
   padding: 0.1rem;
-  width:20%;
-  height:20%;
+  width: 20%;
+  height: 20%;
   margin-bottom: 2rem;
-  filter: drop-shadow(0 0 10px rgba(30, 144, 255, 0.5));
+  /* Icon shadow - white for visibility */
+  filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.6));
   transition: transform 0.3s ease;
 }
 
@@ -4381,15 +4387,15 @@ article.testimonial h3 {
 }
 
 .card-title {
-  color: #ffffff;
+  color: #ffffff; /* White for contrast */
   font-size: 2rem;
-  margin-bottom: 1.5rem;
+  margin-bottom: 2rem;
   text-align: center;
   font-family: 'Inter', sans-serif;
 }
 
 .card-text {
-  color: #999;
+  color: #bbb; /* Light gray for readability */
   font-size: 1.8rem;
   text-align: center;
   line-height: 1.4;
@@ -4400,7 +4406,8 @@ article.testimonial h3 {
   position: absolute;
   width: 100%;
   height: 100%;
-  background: radial-gradient(circle at center, rgba(30, 144, 255, 0.1) 0%, transparent 70%);
+  /* Glow effect - subtle white for dark theme */
+  background: radial-gradient(circle at center, rgba(255, 255, 255, 0.05) 0%, transparent 70%);
   opacity: 0;
   transition: opacity 0.3s ease;
   pointer-events: none;
@@ -4417,13 +4424,24 @@ article.testimonial h3 {
   left: 0;
   width: 100%;
   height: 100%;
-  background: linear-gradient(45deg, transparent, rgba(30, 144, 255, 0.1), transparent);
+  /* Subtle white highlight for the edge */
+  background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.05), transparent);
   transform: translateX(-100%);
   transition: transform 0.6s ease;
 }
 
 .card:hover::before {
   transform: translateX(100%);
+}
+
+/* Shine Animation - Subtle for dark background */
+@keyframes shine {
+  0% {
+    background-position: -100% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
 }
 
 
