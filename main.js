@@ -1092,66 +1092,29 @@ e.forEach((slide, index) => {
     });
 });
       }
-      if (document.querySelector(".scrollPattern")) {
-  const e = document.querySelector(".content"),
-        t = document.querySelector(".scrollPattern"),
-        o = t.querySelector(".patternTop"),
-        a = t.querySelector(".patternBottom");
-  
-  // Initialize variables
-  let s = 0;
-  let n = 0;
-  let newValue = 0;
-
-  // Debug log
-  console.log("Pattern elements:", {t, o, a});
-
-  const r = function () {
-    // Get scroll position
-    const t = window.pageYOffset || document.documentElement.scrollTop;
-    const i = t - n;
-    const c = Math.abs(Math.round(5 * i) / 100);
-    const l = Math.min(Math.max(c, 0), 1);
-
-    // Force recalculation for mobile
-    newValue = window.pageYOffset || document.documentElement.scrollTop;
-    
-    
-
-    // Add touch support
-    if (s < newValue) {
-      gsap.to(o, { 
-        y: `${100 * l}%`,
-        force3D: true,
-        touchAction: "pan-y"
-      });
-      gsap.to(a, { 
-        y: 0,
-        force3D: true,
-        touchAction: "pan-y"
-      });
-    } else if (s > newValue) {
-      gsap.to(o, { 
-        y: 0,
-        force3D: true,
-        touchAction: "pan-y"
-      });
-      gsap.to(a, { 
-        y: `${100 * -l}%`,
-        force3D: true,
-        touchAction: "pan-y"
-      });
-    }
-
-    s = newValue;
-    n = t;
-    requestAnimationFrame(r);
-  };
-
-  // Force initial render
-  gsap.set([o, a], {force3D: true});
-  r();
-}
+      if (!o() && document.querySelector(".scrollPattern")) {
+        const e = document.querySelector(".content"),
+          t = document.querySelector(".scrollPattern"),
+          o = t.querySelector(".patternTop"),
+          a = t.querySelector(".patternBottom");
+        let n = e.getBoundingClientRect().top,
+          s = e.getBoundingClientRect().top;
+        const r = function () {
+          const t = e.getBoundingClientRect().top,
+            i = t - n,
+            c = Math.abs(Math.round(5 * i) / 100),
+            l = Math.min(Math.max(c, 0), 1);
+          (newValue = e.getBoundingClientRect().top),
+            s < newValue
+              ? (gsap.to(o, { y: 100 * l + "%" }), gsap.to(a, { y: 0 }))
+              : s > newValue &&
+                (gsap.to(o, { y: 0 }), gsap.to(a, { y: 100 * -l + "%" })),
+            (s = newValue),
+            (n = t),
+            requestAnimationFrame(r);
+        };
+        r();
+      }
       if (document.querySelector("#fixed-cta")) {
         const e = document.querySelector("#fixed-cta"),
           o = e.querySelector("i");
