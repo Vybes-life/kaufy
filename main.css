@@ -4390,6 +4390,7 @@ article.testimonial h3 {
   color: #ffffff; /* White for contrast */
   font-size: 2rem;
   margin-bottom: 2rem;
+  line-height: 1.4;
   text-align: center;
   font-family: 'Inter', sans-serif;
 }
