@@ -3935,7 +3935,9 @@ article.testimonial h3 {
   right: 12.4998vw
 }
 
-.home #hero #hero-work-link a {
+
+
+.home #hero #hero-work-link .ha {
   align-items: center;
   border: 1px solid rgba(238, 238, 242, .2);
   border-radius: 5px;
@@ -3949,12 +3951,12 @@ article.testimonial h3 {
   width: 100%
 }
 
-.home #hero #hero-work-link a span,
-.home #hero #hero-work-link a svg {
+.home #hero #hero-work-link .ha span,
+.home #hero #hero-work-link .ha svg {
   position: relative
 }
 
-.home #hero #hero-work-link a:hover .link-bg {
+.home #hero #hero-work-link .ha:hover .link-bg {
   transform: translateY(0);
   -moz-transform: translateY(0);
   -webkit-transform: translateY(0);
@@ -3962,7 +3964,7 @@ article.testimonial h3 {
   -ms-transform: translateY(0)
 }
 
-.home #hero #hero-work-link a:hover .arrow-line:first-of-type {
+.home #hero #hero-work-link .ha:hover .arrow-line:first-of-type {
   transform: scaleX(1);
   -moz-transform: scaleX(1);
   -webkit-transform: scaleX(1);
@@ -3975,7 +3977,7 @@ article.testimonial h3 {
   transition-delay: .2s
 }
 
-.home #hero #hero-work-link a:hover .arrow-line:nth-of-type(2) {
+.home #hero #hero-work-link .ha:hover .arrow-line:nth-of-type(2) {
   transform: scaleX(0);
   -moz-transform: scaleX(0);
   -webkit-transform: scaleX(0);
@@ -4074,15 +4076,22 @@ article.testimonial h3 {
     bottom: 0;
     left: 4.1666vw;
     width:90vw;
-    position: absolute
+    position: absolute;
+    
   }
 
-  .home #hero #hero-work-link a {
+  .tapa{
+    bottom:-4vh;
+    left: 25vw;
+    position: absolute;
+  }
+
+  .home #hero #hero-work-link .ha {
     margin-bottom: 0;
     padding: 0.6em 1.75em 0.6em 1em
   }
 
-  .home #hero #hero-work-link a>span:nth-of-type(3) {
+  .home #hero #hero-work-link .ha>span:nth-of-type(3) {
     display: none
   }
 
