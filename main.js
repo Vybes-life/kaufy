@@ -334,7 +334,7 @@ function forceAudioPlay() {
     });
     gsap.set(".ec.main", { scale: 0 });
     let r = gsap.timeline({ paused: !0 });
-    s.to(["#logo", "#hamburger"], {
+    s.to(["#logo", "#hamburger","#s1"], {
       opacity: 0,
       duration: 1,
       pointerEvents: "none",
@@ -3251,7 +3251,7 @@ F.to(D, {
       e.preventDefault();
       var t = $("#smooth-wrapper").smoothState().data("smoothState"),
         o = $(this).attr("href");
-      t.load(o);
+      A.scrollTo(o,true, "top 20%");
     }),
     $(function () {
       "use strict";
