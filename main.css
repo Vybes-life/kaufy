@@ -1390,9 +1390,7 @@ body.dynamic .text-link:before {
   background-color: var(--colorB)
 }
 
-body.dynamic #breadcrumb.dark span:before {
-  background-image: url(https://buzzworthystudio.com/5b339ce7819c13906608.svg)
-}
+
 
 body.dynamic #breadcrumb span.active {
   color: rgba(var(--colorB-RGB), .3)
@@ -2194,7 +2192,7 @@ hamburger:hover .particle {
 }
 
 #breadcrumb span:before {
-  background-image: url(https://buzzworthystudio.com/a828fd7948399ab1bf83.svg);
+  
   background-repeat: no-repeat;
   background-size: 85%;
   content: "";
@@ -2621,7 +2619,7 @@ a.mask-link span {
 }
 
 a.mask-link .dot {
-  background-image: url(https://buzzworthystudio.com/242536776d164b4840d5.svg);
+  
   background-position: bottom;
   background-repeat: no-repeat;
   background-size: 80%;
@@ -2884,7 +2882,7 @@ h6 {
 h2 .dot,
 h3 .dot,
 h4 .dot {
-  /* background-image: url(https://buzzworthystudio.com/242536776d164b4840d5.svg); */
+ 
   background-position: bottom;
   background-repeat: no-repeat;
   display: inline-block;
@@ -3064,7 +3062,7 @@ ul li {
 }
 
 .bs-list li {
-  background-image: url(https://buzzworthystudio.com/ecfc2198f97e38a361eb.svg);
+ 
   background-position: left .35em;
   background-repeat: no-repeat;
   background-size: .65em;
@@ -4827,7 +4825,7 @@ article.testimonial h3 {
 
 #clients .client-stat .stat-data i.decrease,
 #clients .client-stat .stat-data i.increase {
-  background: url(https://buzzworthystudio.com/658a5042f12b98c729c4.svg);
+  
   background-position: 50%;
   background-repeat: no-repeat;
   background-size: 100%;
@@ -5615,7 +5613,7 @@ ul.service-list a:after {
   backface-visibility: hidden;
   -webkit-backface-visibility: hidden;
   -moz-backface-visibility: hidden;
-  background-image: url(https://buzzworthystudio.com/79023c33df62b9fd67b7.svg);
+  
   background-position: 50%;
   background-repeat: no-repeat;
   background-size: 85%;
@@ -6506,7 +6504,7 @@ ul.service-list li:last-of-type a {
 }
 
 .work #hero ul li:before {
-  background: transparent url(https://buzzworthystudio.com/242536776d164b4840d5.svg) no-repeat 50%;
+  
   background-size: 90%;
   content: "";
   display: block;
@@ -7729,7 +7727,7 @@ ul.service-list li:last-of-type a {
   }
 
   #breadcrumb span:before {
-    background-image: url(https://buzzworthystudio.com/a828fd7948399ab1bf83.svg);
+   
     background-repeat: no-repeat;
     background-size: auto;
     content: "";
@@ -8854,7 +8852,7 @@ ul.service-list li:last-of-type a {
   }
 
   ul.service-list a:after {
-    background: transparent url(https://buzzworthystudio.com/658a5042f12b98c729c4.svg) no-repeat;
+    
     background-position: 50%;
     background-size: 75%;
     content: "";
