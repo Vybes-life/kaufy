@@ -194,8 +194,10 @@
 
 <div id="audio-content" style="display: none;">
   <audio id="kaufy-audio" src="aud.wav" type="audio/wav"></audio>
+  
   <!-- Rest of your website content goes here -->
 </div>
+<audio id="submit-sound" preload="auto" src="aud.wav"></audio>
 
 <div id="hamburger">
     <svg width="50" height="45" viewBox="0 0 50 45" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -359,10 +361,10 @@
     <div id="newsletter">
         <input type="email" placeholder="Your Email" name="mail" required>
         <div class="email-underline"></div>
-        <input id="nl-submit" type="submit" value="Subscribe">
+        
     </div>
     
-    <i>
+    <i class="sub" style="cursor: pointer;">
     
     <svg viewBox="0 0 56 12" fill="none" xmlns="http://www.w3.org/2000/svg">
     <path class="arrow-line" d="M1 6L49.8077 6" stroke="#EEEEF2" stroke-linecap="round" stroke-linejoin="round"/>
@@ -758,16 +760,29 @@
     </div>
     <div class="hex-wrap bs-xl-7 bs-sm-18 bs-sm-os-3 xs-top-3 center">
       <svg class="shape-anim" viewBox="0 0 256 218" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-        <g transform="translate(-1529.000000, -989.000000)" fill="none" stroke-width="1" stroke="#EEEEF2">
-          <g transform="translate(1529.555556, 989.920435)">
-            <polyline vector-effect="non-scaling-stroke" points="0 0 0 34.9162585 31.8888889 54.0252776 63.7777778 34.9162585 95.7777778 54.0252776 95.7777778 88.9162585 127.5 108.5 159.555556 88.9162585"></polyline>
-            <polyline vector-effect="non-scaling-stroke" points="95.7777778 88.9162585 63.7777778 108.025278 63.7777778 142.941536 32 162.025278"></polyline>
-            <polyline vector-effect="non-scaling-stroke" points="63.8888889 142.945268 95.7777778 162.025278 127.5 142.945268 160 162.025278 159.555556 196.970546 127.666667 216.079565"></polyline>
-            <polyline vector-effect="non-scaling-stroke" points="160 162.025278 191.444444 142.941536 223.555556 162.054287 254.777778 142.945268"></polyline>
-          </g>
+        <g transform="translate(20, 180)" fill="none" stroke-width="1" stroke="#EEEEF2">
+          <polyline vector-effect="non-scaling-stroke" 
+                    points="0,0 40,-30 80,-45 120,-90 160,-120 200,-140 240,-160">
+          </polyline>
         </g>
       </svg>
     </div>
+    <style>
+      .shape-anim polyline {
+    stroke-dasharray: 1000;
+    stroke-dashoffset: 1000;
+    animation: draw 3s ease-in-out infinite;
+  }
+
+  @keyframes draw {
+    0% {
+      stroke-dashoffset: 1000;
+    }
+    100% {
+      stroke-dashoffset: 0;
+    }
+  }
+    </style>
   </section>
 
 <footer id="footer" class="xl-top-5 xs-top-3">
