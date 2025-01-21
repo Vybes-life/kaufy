@@ -3204,7 +3204,7 @@ document.addEventListener('DOMContentLoaded', function() {
   function playSubmitSound() {
 
     stopMainAudio();
-    
+
     SUBMIT_AUDIO.currentTime = 0;
     SUBMIT_AUDIO.play().catch(err => console.log('Audio play failed:', err));
   }
@@ -3234,11 +3234,20 @@ document.addEventListener('DOMContentLoaded', function() {
     MainThreeScene.setParams({ mainBall: { reflectionColor: 2003199} });
     
     // Page animation
-    timeline.to("#webglBubble", {
-      scale: 0.7,
+    if(!o()) {
+      timeline.to("#webglBubble", {
+        scale: 0.7,
+        duration: 1,
+        ease: "power4.inOut"
+      });
+    }
+    else{timeline.to("#webglBubble", {
+      scale: 1,
       duration: 1,
       ease: "power4.inOut"
     });
+
+    }
 
     try {
       // Submit to Google Apps Script
