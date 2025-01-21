@@ -35,89 +35,61 @@
 
 // Add at top of file
 let audioContext, audioElement, audioSource;
+const SUBMIT_AUDIO = new Audio('aud.wav'); // Update with your audio file name
+const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxAaUDqo9ZW0iZFR2YJIbqEM05J9SRTF7KH5bGkePhCQEdqFbRtbFuB7a910JzYFbxxrg/exec';
 
-// Create enhanced audio initialization function 
+function stopMainAudio() {
+  const mainAudio = document.getElementById('kaufy-audio');
+  if(mainAudio) {
+    mainAudio.pause();
+    mainAudio.currentTime = 0;
+  }
+}
+// Update existing audio initialization function
 function initAudio() {
-  audioContext = new (window.AudioContext || window.webkitAudioContext)();
+  if(!audioContext) {
+    audioContext = new (window.AudioContext || window.webkitAudioContext)();
+  }
   audioElement = document.getElementById('kaufy-audio');
-  audioSource = audioContext.createMediaElementSource(audioElement);
-  audioSource.connect(audioContext.destination);
+  if(!audioSource) {
+    audioSource = audioContext.createMediaElementSource(audioElement);
+    audioSource.connect(audioContext.destination);
+  }
   
   audioElement.volume = 0;
   audioElement.loop = false;
   audioElement.muted = false;
-  
-  // Add mobile-specific settings
   audioElement.playsinline = true;
   audioElement.setAttribute('playsinline', '');
   audioElement.setAttribute('webkit-playsinline', '');
 }
 
-// Enhanced force play function with mobile support
+// Update existing force play function
 function forceAudioPlay() {
-  // Check if running on mobile
   const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
   
-  if (audioContext.state === 'suspended') {
+  if(audioContext?.state === 'suspended') {
     audioContext.resume();
   }
 
-  // Setup play promise with retry mechanism
   const playAttempt = setInterval(() => {
     const promise = audioElement.play();
     
-    if (promise !== undefined) {
+    if(promise !== undefined) {
       promise.then(() => {
         clearInterval(playAttempt);
         
-        // Gradually increase volume
-        if (isMobile) {
-          // Lower volume for mobile
-          gsap.to(audioElement, {
-            volume: 0.3,
-            duration: 2, 
-            ease: "power2.inOut"
-          });
-        } else {
-          gsap.to(audioElement, {
-            volume: 0.5,
-            duration: 2,
-            ease: "power2.inOut"
-          });
-        }
+        gsap.to(audioElement, {
+          volume: isMobile ? 0.3 : 0.5,
+          duration: 2,
+          ease: "power2.inOut"
+        });
       })
       .catch(error => {
-        // Log error but keep trying
         console.log("Playback failed, retrying...", error);
       });
     }
   }, 300);
-
-  // Add interaction handlers for mobile
-  if (isMobile) {
-    const mobileStartAudio = () => {
-      audioElement.play();
-      document.removeEventListener('touchstart', mobileStartAudio);
-    };
-
-    // Add multiple trigger events for mobile
-    ['touchstart', 'touchend', 'click'].forEach(event => {
-      document.addEventListener(event, () => {
-        if (audioContext.state === 'suspended') {
-          audioContext.resume();
-          audioElement.play();
-        }
-      }, {once: true});
-    });
-
-    // Try to autoplay on scroll
-    document.addEventListener('scroll', () => {
-      if (audioContext.state === 'suspended') {
-        audioContext.resume();
-        audioElement.play();
-      }
-    }, {once: true});
-  }
 }
 
 
@@ -3212,40 +3184,108 @@ F.to(D, {
       ease: "power4.inOut",
     }),
     m.classList.contains("init") ? (o() || (A && A.paused(!0)), F.play()) : W(),
-    document.body.addEventListener("click", function (e) {
-      if (e.target && "nl-submit" === e.target.id) {
-        e.preventDefault();
-        const n = document.querySelector("#newsletter form");
-        if (!n.checkValidity()) return void n.reportValidity();
-        var t = document.querySelector("#newsletter input[type=email]");
-        if (!t) return;
-        var o = t.value,
-          a = { request: "mail" };
-        (a.mail = o),
-          window
-            .fetch("/submission", {
-              method: "post",
-              body: JSON.stringify(a),
-              headers: {
-                Accept: "application/json",
-                "Content-Type": "application/json; charset=UTF-8",
-              },
-            })
-            .then((e) => e.text())
-            .then((o) => {
-              document.querySelector("#newsletter input[type=email]").value =
-                "Wonderful! Check your inbox!";
-              var a = document.querySelector(".arrow-link");
-              (e.target.disabled = !0),
-                (t.readOnly = !0),
-                (a.innerHTML =
-                  '<svg width="31" height="20" viewBox="0 0 31 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M1 8.5C1.8 9.3 8.33333 15.8333 11.5 19C18.5294 11.9706 22.4706 8.02944 29.5 1" stroke="#EEEEF2" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>');
-            })
-            .catch((e) => {
-              console.error("Error:", e);
-            });
-      }
-    }),
+    // Add near the top of file after existing audio setup
+
+
+// Find and modify the existing event listener section around line 3214
+
+
+// Add newsletter submission handler
+document.addEventListener('DOMContentLoaded', function() {
+  const submitIcon = document.querySelector('.ha .sub');
+  const haDiv = document.querySelector('.ha');
+  const emailInput = document.querySelector('#newsletter input[type=email]');
+  let isSubmitting = false;
+
+  function validateEmail(email) {
+    return email.match(/^[^\s@]+@[^\s@]+\.[^\s@]+$/);
+  }
+
+  function playSubmitSound() {
+
+    stopMainAudio();
+    
+    SUBMIT_AUDIO.currentTime = 0;
+    SUBMIT_AUDIO.play().catch(err => console.log('Audio play failed:', err));
+  }
+
+  async function handleSubmit(e) {
+    e && e.preventDefault();
+    
+    if(isSubmitting) return;
+    
+    const email = emailInput.value;
+    if(!validateEmail(email)) {
+      emailInput.style.borderColor = 'red';
+      return;
+    }
+
+    isSubmitting = true;
+    emailInput.style.borderColor = '';
+
+    // Play sound
+    playSubmitSound();
+
+    // Start animations
+    const timeline = gsap.timeline();
+    
+    // Trigger WebGL bubble animation
+    MainThreeScene.changeTexture(window.ASSETS.length, !1);
+    MainThreeScene.setParams({ mainBall: { reflectionColor: 2003199} });
+    
+    // Page animation
+    timeline.to("#webglBubble", {
+      scale: 0.7,
+      duration: 1,
+      ease: "power4.inOut"
+    });
+
+    try {
+      // Submit to Google Apps Script
+      const response = await fetch(APPS_SCRIPT_URL, {
+        method: 'POST',
+        body: email,
+        headers: {
+          'Content-Type': 'text/plain'
+        }
+      });
+      
+      if(!response.ok) throw new Error('Submission failed');
+
+      // Show thank you message
+      timeline.to(haDiv, {
+        opacity: 0,
+        duration: 0.5,
+        onComplete: () => {
+          haDiv.innerHTML = `
+            <div class="thank-you" style="text-align: center;">
+              <h3 style="color: #1e90ff; margin-bottom: 1rem;">Thank You!</h3>
+              <p style="color: #eeeef2;">You're on the waitlist! We'll notify you soon.</p>
+            </div>
+          `;
+          gsap.to(haDiv, {
+            opacity: 1,
+            duration: 0.5
+          });
+        }
+      });
+
+    } catch(error) {
+      console.error('Submission error:', error);
+      isSubmitting = false;
+    }
+  }
+
+  // Click handler
+  submitIcon.addEventListener('click', handleSubmit);
+
+  // Enter key handler
+  emailInput.addEventListener('keypress', function(e) {
+    if(e.key === 'Enter') {
+      handleSubmit(e);
+    }
+  });
+}),
 //     // Find this existing nav-link click handler:
 // $(".nav-link").click(function (e) {
 //   e.preventDefault();
