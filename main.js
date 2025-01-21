@@ -3267,6 +3267,9 @@ document.addEventListener('DOMContentLoaded', function() {
         opacity: 0,
         duration: 0.5,
         onComplete: () => {
+          if(isMobile)(
+            document.querySelector('#hero-work-link').style.bottom='-1.5vh')
+            document.querySelector('.tapa').style.bottom='-5.5vh';
           haDiv.innerHTML = `
             <div class="thank-you" style="text-align: center;">
               <h3 style="color: #1e90ff; margin-bottom: 1rem;">Thank You!</h3>
