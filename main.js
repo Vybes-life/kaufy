@@ -3233,20 +3233,21 @@ document.addEventListener('DOMContentLoaded', function() {
     MainThreeScene.changeTexture(window.ASSETS.length, !1);
     MainThreeScene.setParams({ mainBall: { reflectionColor: 2003199} });
     
+    const isMobile = () => window.innerWidth <= 768;
+
     // Page animation
-    if(!o()) {
+    if(!isMobile()) {
       timeline.to("#webglBubble", {
         scale: 0.7,
         duration: 1,
         ease: "power4.inOut"
       });
-    }
-    else{timeline.to("#webglBubble", {
-      scale: 1,
-      duration: 1,
-      ease: "power4.inOut"
-    });
-
+    } else {
+      timeline.to("#webglBubble", {
+        scale: 1,
+        duration: 1,
+        ease: "power4.inOut"
+      });
     }
 
     try {
