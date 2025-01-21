@@ -32,10 +32,11 @@
       (window.addEventListener("resize", N), N());
   }
 
-  // Add at top of file
+
+// Add at top of file
 let audioContext, audioElement, audioSource;
 
-// Create enhanced audio initialization function
+// Create enhanced audio initialization function 
 function initAudio() {
   audioContext = new (window.AudioContext || window.webkitAudioContext)();
   audioElement = document.getElementById('kaufy-audio');
@@ -74,12 +75,12 @@ function forceAudioPlay() {
           // Lower volume for mobile
           gsap.to(audioElement, {
             volume: 0.3,
-            duration: 2,
+            duration: 2, 
             ease: "power2.inOut"
           });
         } else {
           gsap.to(audioElement, {
-            volume: 0.5, 
+            volume: 0.5,
             duration: 2,
             ease: "power2.inOut"
           });
@@ -118,7 +119,6 @@ function forceAudioPlay() {
     }, {once: true});
   }
 }
-
 
 
 
@@ -3181,8 +3181,8 @@ e.forEach((slide, index) => {
 // Modify the loading completion callback
 F.to(D, {
   opacity: 0,
-  duration: 1, 
-  pointerEvents: "none",
+  duration: 1,
+  pointerEvents: "none", 
   ease: "power4.inOut",
   onStart: W,
   onComplete: () => {
@@ -3192,7 +3192,6 @@ F.to(D, {
     // Initialize audio with mobile support
     initAudio();
     forceAudioPlay();
-
     
     // Add additional interaction triggers
     ['click', 'touchstart', 'touchend', 'scroll'].forEach(event => {
@@ -3247,12 +3246,60 @@ F.to(D, {
             });
       }
     }),
-    $(".nav-link").click(function (e) {
+//     // Find this existing nav-link click handler:
+// $(".nav-link").click(function (e) {
+//   e.preventDefault();
+//   var t = $("#smooth-wrapper").smoothState().data("smoothState"),
+//     o = $(this).attr("href");
+//   A.scrollTo(o,true, "top 20%");
+// }),
+
+// $(".nav-link").click(function (e) {
+//   e.preventDefault();
+//   var t = $("#smooth-wrapper").smoothState().data("smoothState"),
+//     o = $(this).attr("href");
+//   t.load(o);
+// }),
+
+document.querySelectorAll('.nav-link').forEach(link => {
+  ['click', 'touchend'].forEach(evt => {
+    link.addEventListener(evt, function(e) {
       e.preventDefault();
-      var t = $("#smooth-wrapper").smoothState().data("smoothState"),
-        o = $(this).attr("href");
-      A.scrollTo(o,true, "top 20%");
-    }),
+      
+      const target = this.getAttribute('href');
+      const targetEl = document.querySelector(target);
+      
+      if(o()) { // Mobile
+        targetEl.scrollIntoView({
+          behavior: 'smooth'
+        });
+      } else { // Desktop
+        // Enable scroll before animation
+        if(A.paused()) {
+          A.paused(false);
+        }
+        
+        // Smooth scroll with callback
+        A.scrollTo(target, true, "top 20%", {
+          onComplete: () => {
+            // Re-enable scrolling
+            document.body.style.overflow = '';
+            A.paused(false);
+          }
+        });
+      }
+
+      // Close menu if open
+      if(p.classList.contains('active')) {
+        q.reverse();
+        b.reverse().delay(0.1);
+        menuInner.reverse();
+        p.classList.remove('active');
+      }
+
+    }, {passive: false});
+  });
+}),
     $(function () {
       "use strict";
       var e = {
