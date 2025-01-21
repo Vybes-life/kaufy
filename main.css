@@ -877,6 +877,7 @@
   }
 }
 
+
 @media only screen and (max-width:768px) {
   .xs-wrap {
     flex-wrap: wrap
@@ -2318,6 +2319,7 @@ html.no-js #smooth-wrapper {
 }
 
 #footer {
+  
   padding-bottom: 4.1666vw
 }
 
@@ -4071,6 +4073,7 @@ article.testimonial h3 {
   }
 
   .home #hero #hero-work-link {
+    
     bottom: 0;
     left: 4.1666vw;
     width:90vw;
@@ -7686,7 +7689,7 @@ ul.service-list li:last-of-type a {
 
 @media only screen and (max-width:1024px) {
   .scrollPattern {
-    display: block
+    display: hidden;
   }
 
   #logo {
@@ -8092,9 +8095,12 @@ ul.service-list li:last-of-type a {
     padding-top: 0
   }
 
+  
   body {
-    overflow: auto;
+    
+    overflow-y: auto;
     overflow-x: hidden;
+    height: 100%;
     position: relative
   }
 
@@ -8132,15 +8138,30 @@ ul.service-list li:last-of-type a {
     height: 100% !important;
     left: 0 !important;
     margin: left 0;
-    overflow: visible;
+    overflow: hidden;
     right: auto !important;
     top: 0 !important;
     width: 100% !important
   }
 
+  #smooth-wrapper {
+    min-height: 100vh;
+    max-height: 100%;
+    overflow: hidden;
+    position: relative;
+  }
+
+  
+
   #smooth-wrapper .content {
     padding-top: 20.833vw
   }
+
+  .content {
+    min-height: 100vh;
+    position: relative;
+  }
+
 
   .page-to-page {
     border-radius: 0;
@@ -8177,7 +8198,7 @@ ul.service-list li:last-of-type a {
   }
 
   .scrollPattern {
-    display: block
+    display: hidden;
   }
 
   .section-title,
