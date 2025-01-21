@@ -3236,7 +3236,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // Page animation
     if(!o()) {
       timeline.to("#webglBubble", {
-        scale: 0.7,
+        scale: 1,
         duration: 1,
         ease: "power4.inOut"
       });
