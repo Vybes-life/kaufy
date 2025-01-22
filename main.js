@@ -33,20 +33,37 @@
   }
 
 
-// Add at top of file
+// Update existing audio control functions at the top of the file
 let audioContext, audioElement, audioSource;
-const SUBMIT_AUDIO = new Audio('success.wav'); // Update with your audio file name
-SUBMIT_AUDIO.volume = 0.4; // Adjust the volume level as needed
+const SUBMIT_AUDIO = new Audio('success.wav');
 const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxAaUDqo9ZW0iZFR2YJIbqEM05J9SRTF7KH5bGkePhCQEdqFbRtbFuB7a910JzYFbxxrg/exec';
 
-function stopMainAudio() {
+// Add new function to toggle audio state
+function toggleAudio() {
   const mainAudio = document.getElementById('kaufy-audio');
-  if(mainAudio) {
+  const tapText = document.querySelector('.tapa');
+  
+  if (mainAudio.paused) {
+    // Start audio
+    initAudio();
+    forceAudioPlay();
+    if (tapText) {
+      tapText.innerHTML = "(&nbsp;&nbsp;&nbsp;&#9632;&nbsp;&nbsp;TAP ANYWHERE TO STOP&nbsp;&nbsp;&nbsp;)";
+    }
+  } else {
+    // Stop audio
     mainAudio.pause();
     mainAudio.currentTime = 0;
+    if (audioContext) {
+      audioContext.suspend();
+    }
+    if (tapText) {
+      tapText.innerHTML = "(&nbsp;&nbsp;&nbsp;&#9654;&nbsp;&nbsp;TAP ANYWHERE TO START&nbsp;&nbsp;&nbsp;)";
+    }
   }
 }
-// Update existing audio initialization function
+
+// Update existing initialization
 function initAudio() {
   if(!audioContext) {
     audioContext = new (window.AudioContext || window.webkitAudioContext)();
@@ -63,6 +80,13 @@ function initAudio() {
   audioElement.playsinline = true;
   audioElement.setAttribute('playsinline', '');
   audioElement.setAttribute('webkit-playsinline', '');
+
+  // Add click/tap handler to body for toggling audio
+  document.body.addEventListener('click', toggleAudio);
+  document.body.addEventListener('touchend', (e) => {
+    e.preventDefault();
+    toggleAudio();
+  });
 }
 
 // Update existing force play function
@@ -73,24 +97,33 @@ function forceAudioPlay() {
     audioContext.resume();
   }
 
-  const playAttempt = setInterval(() => {
-    const promise = audioElement.play();
-    
-    if(promise !== undefined) {
-      promise.then(() => {
-        clearInterval(playAttempt);
-        
-        gsap.to(audioElement, {
-          volume: isMobile ? 0.3 : 0.5,
-          duration: 2,
-          ease: "power2.inOut"
+  const mainAudio = document.getElementById('kaufy-audio');
+  if (mainAudio && mainAudio.paused) {
+    const playAttempt = setInterval(() => {
+      const promise = mainAudio.play();
+      
+      if(promise !== undefined) {
+        promise.then(() => {
+          clearInterval(playAttempt);
+          
+          gsap.to(mainAudio, {
+            volume: isMobile ? 0.3 : 0.5,
+            duration: 2,
+            ease: "power2.inOut"
+          });
+
+          // Update tap text after successful play
+          const tapText = document.querySelector('.tapa');
+          if (tapText) {
+            tapText.innerHTML = "(&nbsp;&nbsp;&nbsp;&#9632;&nbsp;&nbsp;TAP ANYWHERE TO STOP&nbsp;&nbsp;&nbsp;)";
+          }
+        })
+        .catch(error => {
+          console.log("Playback failed, retrying...", error);
         });
-      })
-      .catch(error => {
-        console.log("Playback failed, retrying...", error);
-      });
-    }
-  }, 300);
+      }
+    }, 300);
+  }
 }
 
 
@@ -3272,7 +3305,7 @@ document.addEventListener('DOMContentLoaded', function() {
             document.querySelector('#hero-work-link').style.bottom='-1.5vh')
             document.querySelector('.tapa').style.bottom='-5.5vh';
           haDiv.innerHTML = `
-            <div class="thank-you" style="text-align: center;">
+            <div class="thank-you center" style="text-align: center;">
               <h3 style="color: #1e90ff; margin-bottom: 1rem;">Thank You!</h3>
               <p style="color: #eeeef2;">You're on the waitlist! We'll notify you soon.</p>
             </div>
