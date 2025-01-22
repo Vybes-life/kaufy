@@ -48,7 +48,7 @@ function toggleAudio() {
     initAudio();
     forceAudioPlay();
     if (tapText) {
-      tapText.innerHTML = "(&nbsp;&nbsp;&nbsp;&#9632;&nbsp;&nbsp;TAP ANYWHERE TO STOP&nbsp;&nbsp;&nbsp;)";
+      tapText.innerHTML = "(&nbsp;&nbsp;&nbsp;&#9632;&nbsp;&nbsp;TAP HERE TO STOP&nbsp;&nbsp;&nbsp;)";
     }
   } else {
     // Stop audio
@@ -58,7 +58,7 @@ function toggleAudio() {
       audioContext.suspend();
     }
     if (tapText) {
-      tapText.innerHTML = "(&nbsp;&nbsp;&nbsp;&#9654;&nbsp;&nbsp;TAP ANYWHERE TO START&nbsp;&nbsp;&nbsp;)";
+      tapText.innerHTML = "(&nbsp;&nbsp;&nbsp;&#9654;&nbsp;&nbsp;TAP HERE TO START AGAIN&nbsp;&nbsp;&nbsp;)";
     }
   }
 }
@@ -80,9 +80,9 @@ function initAudio() {
   audioElement.playsinline = true;
   audioElement.setAttribute('playsinline', '');
   audioElement.setAttribute('webkit-playsinline', '');
-
+  const tapText = document.querySelector('.tapa');
   // Add click/tap handler to body for toggling audio
-  document.body.addEventListener('click', toggleAudio);
+  tapText.addEventListener('click', toggleAudio);
   
 }
 
@@ -112,7 +112,7 @@ function forceAudioPlay() {
           // Update tap text after successful play
           const tapText = document.querySelector('.tapa');
           if (tapText) {
-            tapText.innerHTML = "(&nbsp;&nbsp;&nbsp;&#9632;&nbsp;&nbsp;TAP ANYWHERE TO STOP&nbsp;&nbsp;&nbsp;)";
+            tapText.innerHTML = "(&nbsp;&nbsp;&nbsp;&#9632;&nbsp;&nbsp;TAP HERE TO STOP&nbsp;&nbsp;&nbsp;)";
           }
         })
         .catch(error => {
