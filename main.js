@@ -38,6 +38,13 @@ let audioContext, audioElement, audioSource;
 const SUBMIT_AUDIO = new Audio('success.wav');
 const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxAaUDqo9ZW0iZFR2YJIbqEM05J9SRTF7KH5bGkePhCQEdqFbRtbFuB7a910JzYFbxxrg/exec';
 
+function stopMainAudio() {
+  const mainAudio = document.getElementById('kaufy-audio');
+  if(mainAudio) {
+    mainAudio.pause();
+    mainAudio.currentTime = 0;
+  }
+}
 // Add new function to toggle audio state
 function toggleAudio() {
   const mainAudio = document.getElementById('kaufy-audio');
