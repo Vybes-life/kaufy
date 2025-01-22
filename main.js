@@ -83,10 +83,7 @@ function initAudio() {
 
   // Add click/tap handler to body for toggling audio
   document.body.addEventListener('click', toggleAudio);
-  document.body.addEventListener('touchend', (e) => {
-    e.preventDefault();
-    toggleAudio();
-  });
+  
 }
 
 // Update existing force play function
