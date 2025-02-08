@@ -8,7 +8,7 @@
       ? xu(se, N, { enumerable: !0, configurable: !0, writable: !0, value: qe })
       : (se[N] = qe);
   var Ne = (se, N, qe) => Cu(se, typeof N != "symbol" ? N + "" : N, qe);
-  const kaufyKey = process.env.KAUFY_KEY;
+  const kaufyKey = "REPLACE_WITH_SECRET";
   var se,
     N,
     qe,
