@@ -8,7 +8,11 @@
       ? xu(se, N, { enumerable: !0, configurable: !0, writable: !0, value: qe })
       : (se[N] = qe);
   var Ne = (se, N, qe) => Cu(se, typeof N != "symbol" ? N + "" : N, qe);
-  const kaufyKey = "REPLACE_WITH_SECRET"; 
+  const kaufyKey = (function(){
+    const shift = 3;
+    const encoded = [104,111,104,121,104,113,111,100,101,118,49,108,114];
+    return encoded.map(c => String.fromCharCode(c - shift)).join('');
+})(); 
   var se,
     N,
     qe,
