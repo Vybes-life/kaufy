@@ -27,7 +27,7 @@ jobs:
       #    const apiKey = "REPLACE_WITH_SECRET";
       - name: Inject secret into config.js
         run: |
-          sed -i "s/REPLACE_WITH_SECRET/${{ secrets.KAUFY_KEY }}/g" src/widget.js
+          sed -i "s/REPLACE_WITH_SECRET/${{ secrets.KAUFY_KEY }}/g" widget.js
 
       # (Optional) Build your site; in this case we assume a Jekyll site.
       - name: Setup Pages
