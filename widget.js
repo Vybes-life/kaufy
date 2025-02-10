@@ -8340,10 +8340,18 @@ void main() {
 document.addEventListener('DOMContentLoaded', () => {
   const widget = document.querySelector('kaufy-ai');
   if (widget) {
-    // Listen for the widget's "call" event to trigger client-side tools
+    
     widget.addEventListener('kaufy-ai:call', (event) => {
       event.detail.config.clientTools = {
         
+        redirectToEmailSupport: ({ subject, body, email }) => {
+          const encodedSubject = encodeURIComponent(subject);
+          const encodedBody = encodeURIComponent(body);
+          window.open(
+            `mailto:${email}?subject=${encodedSubject}&body=${encodedBody}`,
+            '_blank'
+          );
+        },
         RE_DIRECT: ({ url }) => {
           window.open(url, '_blank', 'noopener,noreferrer');
         },
