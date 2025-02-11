@@ -1,3 +1,29 @@
+document.addEventListener('DOMContentLoaded', () => {
+  const widget = document.querySelector('kaufy-ai');
+  if (widget) {
+    
+    widget.addEventListener('kaufy-ai:call', (event) => {
+      event.detail.config.clientTools = {
+        
+        RE_DIRECT: ({ url }) => {
+          window.open(url, '_blank', 'noopener,noreferrer');
+        },
+        
+        redirectToEmailSupport: ({ subject, body, email }) => {
+          const encodedSubject = encodeURIComponent(subject);
+          const encodedBody = encodeURIComponent(body);
+          window.open(
+            `mailto:${email}?subject=${encodedSubject}&body=${encodedBody}`,
+            '_blank'
+          );
+        },
+      };
+    });
+  }
+});
+
+
+
 (function (se) {
   typeof define == "function" && define.amd ? define(se) : se();
 })(function () {
@@ -8,11 +34,15 @@
       ? xu(se, N, { enumerable: !0, configurable: !0, writable: !0, value: qe })
       : (se[N] = qe);
   var Ne = (se, N, qe) => Cu(se, typeof N != "symbol" ? N + "" : N, qe);
-  const kaufyKey = (function(){
+  
+
+
+
+  const kau = (function(){
     const shift = 3;
     const encoded = [104,111,104,121,104,113,111,100,101,118,49,108,114];
     return encoded.map(c => String.fromCharCode(c - shift)).join('');
-})(); 
+})();
   var se,
     N,
     qe,
@@ -1179,10 +1209,10 @@
   function Io(e, t) {
     return typeof t == "function" ? t(e) : t;
   }
-  const To =`https://api.${kaufyKey}`,
-    Ro = `https://api.us.${kaufyKey}`,
-    ua = `wss://api.${kaufyKey}`,
-    da =  `wss://api.us.${kaufyKey}`;
+  const To =`https://api.${kau}`,
+    Ro = `https://api.us.${kau}`,
+    ua = `wss://api.${kau}`,
+    da =  `wss://api.us.${kau}`;
   function No(e, t) {
     for (var n in t) e[n] = t[n];
     return e;
@@ -2156,7 +2186,7 @@
       let n = null;
       try {
         var o;
-        const i = (o = t.origin) != null ? o : `wss://api.${kaufyKey}`,
+        const i = (o = t.origin) != null ? o : `wss://api.${kau}`,
           a = t.signedUrl
             ? t.signedUrl
             : i + "/v1/convai/conversation?agent_id=" + t.agentId,
@@ -2411,6 +2441,14 @@
                     .tentative_agent_response,
               });
               break;
+            case "agent_response":
+              const response = a.agent_response_event.agent_response;
+              setCurrentTranscript(response);
+              options.onMessage({
+                source: "ai",
+                message: response,
+              });
+              break;
             case "client_tool_call":
               if (
                 i.options.clientTools.hasOwnProperty(
@@ -2573,7 +2611,7 @@
         this.updateStatus("connected");
     }
   }
-  function Ma(e, t, n = `https://api.${kaufyKey}`) {
+  function Ma(e, t, n = `https://api.${kau}`) {
     return fetch(`${n}/v1/convai/conversations/${e}/feedback`, {
       method: "POST",
       body: JSON.stringify({ feedback: t ? "like" : "dislike" }),
@@ -2785,6 +2823,8 @@
       customContent: "_customContent_1yvvz_65",
       compact: "_compact_1yvvz_69",
       avatar: "_avatar_1yvvz_75",
+      chatBubble: "_chatBubble_1yvvz_600",
+      chatBubbleText: "_chatBubbleText_1yvvz_630",
       avatarBackground: "_avatarBackground_1yvvz_91",
       avatarImage: "_avatarImage_1yvvz_101",
       canvas: "_canvas_1yvvz_113",
@@ -3125,7 +3165,7 @@ void main() {
             Math.pow(i, 2.2),
           ]);
         } catch (o) {
-          console.error(`[ConversationalAI] Failed to parse ${n} as color:`, o);
+          console.error(`Failed to parse ${n} as color:`, o);
         }
       }
       getShader(t, n) {
@@ -7726,6 +7766,7 @@ void main() {
     languageConfig: s,
     dynamicVariables: c,
   }) {
+    const [currentTranscript, setCurrentTranscript] = E(null);
     const l = Y(() => (e ? !!localStorage.getItem(e) : !1), [e]),
       d = L(null),
       u = L(null),
@@ -7741,7 +7782,7 @@ void main() {
           I.reason === "error" &&
             (k(I.message),
             console.error(
-              "[ConversationalAI] Disconnected due to an error:",
+              "Disconnected due to an error:",
               I.message
             ));
         },
@@ -7834,7 +7875,7 @@ void main() {
                 (I) => {
                   Ma(A, I, a === "us" ? Ro : To).catch(() => {
                     console.error(
-                      `[ConversationalAI] Cannot send feedback for conversation ${A}`
+                      `Cannot send feedback for conversation ${A}`
                     );
                   }),
                     j(null),
@@ -7856,6 +7897,16 @@ void main() {
       z(() => {
         R && q(R);
       }, [R]),
+      (currentTranscript && (
+        g('div',{
+          className: S.chatBubble,
+          children: g('p',{
+            className:S.chatBubbleText,
+            children: currentTranscript
+          })
+        })
+        
+      )),
       g("div", {
         ref: d,
         className: ce(
@@ -8057,7 +8108,7 @@ void main() {
       default:
         return (
           console.warn(
-            `[ConversationalAI] Invalid server-location: ${e}. Defaulting to "us"`
+            `Invalid server-location: ${e}. Defaulting to "us"`
           ),
           "us"
         );
@@ -8095,6 +8146,14 @@ void main() {
   '._avatar_1yvvz_75 { position: relative; width: 60px; height: 60px; }' +
   '._compact_1yvvz_69 ._avatar_1yvvz_75 { width: 40px; height: 40px; }' +
   '._expandable_1yvvz_59 ._avatar_1yvvz_75 { width: 96px; height: 96px; }' +
+  '@media (min-width: 768px) {' +
+    ':host { right: 32px; bottom: 32px; }' +
+    '._wrapper_1yvvz_15 { gap: 16px; padding: 0; }' +
+    '._box_1yvvz_36 { padding: 24px; gap: 16px; max-width: 480px; }' +
+    '._avatar_1yvvz_75 { width: 60px; height: 60px; }' +
+    '._actions_1yvvz_118 { min-width: 160px; width: min-content; }' +
+    '._btn_1yvvz_159 { height: 40px; max-width: 300px; }' +
+  '}'+
   '._avatarBackground_1yvvz_91 { border-radius: 50%; position: absolute; top: -2px; left: -2px; right: -2px; bottom: -2px; background-color: rgba(255,255,255,0.2); }' +
   '._avatarImage_1yvvz_101 { border-radius: 50%; position: absolute; top: 0; left: 0; right: 0; bottom: 0; background-size: cover; background-color: #1A1A2E; overflow: hidden; }' +
   '._canvas_1yvvz_113 { width: 100%; height: 100%; }' +
@@ -8161,7 +8220,51 @@ void main() {
   '._selectScrollButton_1yvvz_504 { display: flex; align-items: center; justify-content: center; height: 24px; background-color: #16213E; cursor: default; }' +
   '._error_1yvvz_513 { max-width: 320px; font-size: 14px; line-height: 20px; }' +
   '._error_1yvvz_513 h1 { margin: 0 0 16px; font-size: 22px; font-weight: 400; }' +
-  '._error_1yvvz_513 p { margin: 0; }';
+  '._error_1yvvz_513 p { margin: 0; }'+
+  `._chatBubble_1yvvz_600 {
+  position: absolute;
+  bottom: 100%;
+  right: 0;
+  margin-bottom: 16px;
+  background: #ffffff;
+  color: #000000;
+  padding: 12px 16px;
+  border-radius: 12px;
+  max-width: 300px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  transform-origin: bottom right;
+  animation: bubbleIn 0.3s ease-out forwards;
+  pointer-events: none;
+}
+
+._chatBubble_1yvvz_600::after {
+  content: '';
+  position: absolute;
+  bottom: -8px;
+  right: 24px;
+  width: 0;
+  height: 0;
+  border-left: 8px solid transparent;
+  border-right: 8px solid transparent;
+  border-top: 8px solid #ffffff;
+}
+
+@keyframes bubbleIn {
+  from {
+    opacity: 0;
+    transform: scale(0.8) translateX(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateX(0);
+  }
+}
+
+._chatBubbleText_1yvvz_630 {
+  margin: 0;
+  font-size: 14px;
+  line-height: 1.4;
+}`;
   function gu({ config: e }) {
     let t = mu;
     const n = Y(
@@ -8244,7 +8347,7 @@ void main() {
             return JSON.parse(m);
           } catch (T) {
             console.error(
-              `[ConversationalAI] Cannot parse dynamic-variables: ${
+              `Cannot parse dynamic-variables: ${
                 T == null ? void 0 : T.message
               }`
             );
@@ -8261,7 +8364,7 @@ void main() {
             }
           } catch (M) {
             console.error(
-              `[ConversationalAI] Cannot parse override-config: ${
+              `Cannot parse override-config: ${
                 M == null ? void 0 : M.message
               }`
             );
@@ -8278,7 +8381,7 @@ void main() {
             })
             .catch((M) => {
               console.error(
-                `[ConversationalAI] Cannot fetch config for agent ${o}: ${
+                `Cannot fetch config for agent ${o}: ${
                   M == null ? void 0 : M.message
                 }`
               ),
@@ -8300,7 +8403,7 @@ void main() {
         }
         x(null),
           console.error(
-            "[ConversationalAI] Either agent-id or signed-url is required"
+            "Either agent-id or signed-url is required"
           );
       }, [o, r, v]),
       g(oe, {
@@ -8334,28 +8437,9 @@ void main() {
       throw new Error("Response does not contain widget_config");
     return i.widget_config;
   }
+  
   ia(yu, "kaufy-ai", vu, { shadow: !0 });
 });
 
-document.addEventListener('DOMContentLoaded', () => {
-  const widget = document.querySelector('kaufy-ai');
-  if (widget) {
-    
-    widget.addEventListener('kaufy-ai:call', (event) => {
-      event.detail.config.clientTools = {
-        
-        redirectToEmailSupport: ({ subject, body, email }) => {
-          const encodedSubject = encodeURIComponent(subject);
-          const encodedBody = encodeURIComponent(body);
-          window.open(
-            `mailto:${email}?subject=${encodedSubject}&body=${encodedBody}`,
-            '_blank'
-          );
-        },
-        RE_DIRECT: ({ url }) => {
-          window.open(url, '_blank', 'noopener,noreferrer');
-        },
-      };
-    });
-  }
-});
+
+
