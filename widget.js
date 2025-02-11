@@ -1,4 +1,17 @@
-document.addEventListener('DOMContentLoaded', () => {
+
+
+
+
+(function (se) {
+  typeof define == "function" && define.amd ? define(se) : se();
+})(function () {
+  "use strict";
+  var xu = Object.defineProperty;
+  var Cu = (se, N, qe) =>
+    N in se
+      ? xu(se, N, { enumerable: !0, configurable: !0, writable: !0, value: qe })
+      : (se[N] = qe);
+  var Ne = (se, N, qe) => Cu(se, typeof N != "symbol" ? N + "" : N, qe);
   const widget = document.querySelector('kaufy-ai');
   if (widget) {
     
@@ -20,21 +33,6 @@ document.addEventListener('DOMContentLoaded', () => {
       };
     });
   }
-});
-
-
-
-(function (se) {
-  typeof define == "function" && define.amd ? define(se) : se();
-})(function () {
-  "use strict";
-  var xu = Object.defineProperty;
-  var Cu = (se, N, qe) =>
-    N in se
-      ? xu(se, N, { enumerable: !0, configurable: !0, writable: !0, value: qe })
-      : (se[N] = qe);
-  var Ne = (se, N, qe) => Cu(se, typeof N != "symbol" ? N + "" : N, qe);
-  
 
 
 
