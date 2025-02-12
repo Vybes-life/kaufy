@@ -1181,45 +1181,7 @@
   }
 }
 
-/* @font-face {
-  font-display: swap;
-  font-family: 'Inter';
-  font-style: normal;
-  font-weight: 400;
-  src: url(91216a0ea6e4f35b0840.woff2) format("woff2"), url(1e4e905a58f4b3b53895.woff) format("woff")
-}
 
-@font-face {
-  font-display: swap;
-  font-family: 'Inter' Bold;
-  font-style: normal;
-  font-weight: 700;
-  src: url(1ecbcc126412ccfd5436.woff2) format("woff2"), url(4449b058974f104347fa.woff) format("woff")
-} */
-
-@font-face {
-  font-display: swap;
-  font-family: TT Tunnels Bold;
-  font-style: normal;
-  font-weight: 400;
-  src: url(1f90f94c17909f8555b5.woff2) format("woff2"), url(ca7d4b773287602d966f.woff) format("woff")
-}
-
-@font-face {
-  font-display: swap;
-  font-family: TT Tunnels Regular;
-  font-style: normal;
-  font-weight: 400;
-  src: url(9ececc5176aa88a2f1ac.woff2) format("woff2"), url(5325be966f3f986bd6bd.woff) format("woff")
-}
-
-@font-face {
-  font-display: swap;
-  font-family: TT Lakes Neue;
-  font-style: normal;
-  font-weight: 400;
-  src: url(ebda1d087be291f49380.woff2) format("woff2"), url(c5640e841eca71c7d86d.woff) format("woff")
-}
 
 .FontBody {
   font-family: 'Inter', Open Sans, Helvetica, sans-serif;
@@ -1233,7 +1195,7 @@
 }
 
 .FontTitle {
-  font-family: TT Tunnels Bold, Impact, sans-serif;
+  font-family: "Sofia Sans Extra Condensed", Impact, sans-serif;
   font-weight: 400;
 }
 
@@ -1251,7 +1213,7 @@
 }
 
 .FontTech {
-  font-family: TT Lakes Neue, Impact, sans-serif;
+  font-family: "Rajdhani", Impact, sans-serif;
   font-weight: 400
 }
 
@@ -1594,7 +1556,7 @@ body.dynamic .screen {
 
 #intake-form input[type=email],
 #intake-form input[type=text] {
-  font-family: TT Lakes Neue, Impact, sans-serif;
+  font-family: "Rajdhani", Impact, sans-serif;
   font-weight: 400;
   line-height: 60px;
   padding: 0 2em
@@ -1634,7 +1596,7 @@ body.dynamic .screen {
   color: #eeeef2;
   cursor: pointer;
   flex: 0 0 25%;
-  font-family: TT Lakes Neue, Impact, sans-serif;
+  font-family: "Rajdhani", Impact, sans-serif;
   font-size: 12px;
   font-weight: 400;
   text-transform: uppercase
@@ -1649,14 +1611,14 @@ input:-webkit-autofill:hover {
 
 ::placeholder {
   color: rgba(238, 238, 242, .5);
-  font-family: TT Lakes Neue, Impact, sans-serif;
+  font-family: "Rajdhani", Impact, sans-serif;
   font-weight: 400;
   opacity: 1
 }
 
 :-ms-input-placeholder {
   color: rgba(238, 238, 242, .5);
-  font-family: TT Lakes Neue, Impact, sans-serif;
+  font-family: "Rajdhani", Impact, sans-serif;
   font-weight: 400
 }
 
@@ -2062,7 +2024,7 @@ hamburger:hover .particle {
 
 
 #menu-slide {
-  font-family: TT Tunnels Bold, Impact, sans-serif;
+  font-family: "Sofia Sans Extra Condensed", Impact, sans-serif;
   height: 60vh;
   left: 10px;
   overflow: hidden;
@@ -2097,7 +2059,7 @@ hamburger:hover .particle {
 
 #menu-slide .social {
   bottom: 4.1666vw;
-  font-family: TT Lakes Neue, Impact, sans-serif;
+  font-family: "Rajdhani", Impact, sans-serif;
   font-weight: 400;
   position: absolute;
   right: 50%;
@@ -2140,7 +2102,7 @@ hamburger:hover .particle {
 
 #menu-slide #links div:nth-of-type(2) a {
   display: inline-block;
-  font-family: TT Lakes Neue, Impact, sans-serif;
+  font-family: "Rajdhani", Impact, sans-serif;
   font-size: 18px;
   font-weight: 400;
   line-height: 1.2;
@@ -2542,7 +2504,7 @@ html.no-js #smooth-wrapper {
 
 .marquee {
   color: #151833;
-  font-family: TT Tunnels Bold, Impact, sans-serif;
+  font-family: "Sofia Sans Extra Condensed", Impact, sans-serif;
   font-size: 23.6vw;
   line-height: 1em;
   overflow: hidden;
@@ -2566,7 +2528,7 @@ html.no-js #smooth-wrapper {
 
 .text-progress {
   display: flex;
-  font-family: TT Tunnels Bold, Impact, sans-serif;
+  font-family: "Sofia Sans Extra Condensed", Impact, sans-serif;
   font-size: 34vw;
   height: 1em;
   overflow: visible;
@@ -2863,7 +2825,7 @@ h3,
 h4,
 h5,
 h6 {
-  font-family: TT Tunnels Bold, Impact, sans-serif;
+  font-family: "Sofia Sans Extra Condensed", Impact, sans-serif;
   text-transform: uppercase
 }
 
@@ -3022,7 +2984,7 @@ figure {
 .big-fade {
   color: #171a37;
   display: block;
-  font-family: TT Tunnels Bold, Impact, sans-serif;
+  font-family: "Sofia Sans Extra Condensed", Impact, sans-serif;
   font-size: 37vw;
   line-height: .8;
   text-align: center;
@@ -3039,7 +3001,7 @@ figure {
 }
 
 .font-acc {
-  font-family: TT Tunnels Bold, Impact, sans-serif
+  font-family: "Sofia Sans Extra Condensed", Impact, sans-serif
 }
 
 @supports (-webkit-touch-callout:none) {
@@ -3072,7 +3034,7 @@ ul li {
 }
 
 .bs-title {
-  font-family: TT Tunnels Bold, Impact, sans-serif
+  font-family: "Sofia Sans Extra Condensed", Impact, sans-serif
 }
 
 @supports (-webkit-touch-callout:none) {
@@ -3089,7 +3051,7 @@ ul li {
 }
 
 .bs-tech {
-  font-family: TT Lakes Neue, Impact, sans-serif;
+  font-family: "Rajdhani", Impact, sans-serif;
   font-size: 12px;
   text-transform: uppercase
 }
@@ -3300,7 +3262,7 @@ ul li {
 .section-title,
 .w-title {
   display: inline-block;
-  font-family: TT Lakes Neue, Impact, sans-serif;
+  font-family: "Rajdhani", Impact, sans-serif;
   font-size: 12px;
   font-weight: 400;
   padding-left: 1.5rem;
@@ -4543,7 +4505,7 @@ article.testimonial h3 {
   bottom: 0;
   color: #151833;
   display: flex;
-  font-family: TT Tunnels Bold, Impact, sans-serif;
+  font-family: "Sofia Sans Extra Condensed", Impact, sans-serif;
   font-size: clamp(90px, 16.9vw, 20vw);
   justify-content: center;
   left: 0;
@@ -4830,7 +4792,7 @@ article.testimonial h3 {
 }
 
 #clients .client-stat .stat-data i {
-  font-family: TT Lakes Neue, Impact, sans-serif;
+  font-family: "Rajdhani", Impact, sans-serif;
   font-size: 16px;
   font-style: normal;
   font-weight: 400
@@ -4874,7 +4836,7 @@ article.testimonial h3 {
 
 #awards .awards-scroll {
   color: #171a37;
-  font-family: TT Tunnels Bold, Impact, sans-serif;
+  font-family: "Sofia Sans Extra Condensed", Impact, sans-serif;
   font-size: 37vw;
   line-height: .8;
   position: relative
@@ -5177,7 +5139,7 @@ article.testimonial h3 {
 }
 
 #magic-keys {
-  font-family: TT Tunnels Bold, Impact, sans-serif;
+  font-family: "Sofia Sans Extra Condensed", Impact, sans-serif;
   left: 50%;
   position: fixed;
   text-align: center;
@@ -6314,7 +6276,7 @@ ul.service-list li:last-of-type a {
 .service-detail #hero .fontMask {
   color: transparent;
   display: block;
-  font-family: TT Tunnels Bold, Impact, sans-serif;
+  font-family: "Sofia Sans Extra Condensed", Impact, sans-serif;
   left: 0;
   line-height: .8;
   position: absolute;
@@ -6764,7 +6726,7 @@ ul.service-list li:last-of-type a {
   align-items: center;
   bottom: 4.1666vw;
   display: flex;
-  font-family: TT Lakes Neue, Impact, sans-serif;
+  font-family: "Rajdhani", Impact, sans-serif;
   font-weight: 400;
   height: 1.5em;
   justify-content: space-between;
@@ -6778,7 +6740,7 @@ ul.service-list li:last-of-type a {
 }
 
 .work #slide-count ul {
-  font-family: TT Lakes Neue, Impact, sans-serif;
+  font-family: "Rajdhani", Impact, sans-serif;
   font-weight: 400;
   line-height: 1.5em
 }
@@ -6901,7 +6863,7 @@ ul.service-list li:last-of-type a {
 
 .work-detail .work-results .circle-link .circle-icon span {
   display: block;
-  font-family: TT Lakes Neue, Impact, sans-serif;
+  font-family: "Rajdhani", Impact, sans-serif;
   font-size: 12px;
   font-weight: 400;
   height: 1em !important;
@@ -6925,7 +6887,7 @@ ul.service-list li:last-of-type a {
 }
 
 .work-detail .work-results .bs-60 {
-  font-family: TT Lakes Neue, Impact, sans-serif;
+  font-family: "Rajdhani", Impact, sans-serif;
   font-weight: 400
 }
 
@@ -6955,7 +6917,7 @@ ul.service-list li:last-of-type a {
 }
 
 .work-detail .work-results ul li ul li {
-  font-family: TT Lakes Neue, Impact, sans-serif;
+  font-family: "Rajdhani", Impact, sans-serif;
   font-weight: 400;
   line-height: 1.2em
 }
@@ -7473,7 +7435,7 @@ ul.service-list li:last-of-type a {
   border-radius: 40em;
   color: #eeeef2;
   cursor: pointer;
-  font-family: TT Lakes Neue, Impact, sans-serif;
+  font-family: "Rajdhani", Impact, sans-serif;
   font-size: 14px;
   font-weight: 400;
   line-height: 80px;
@@ -7645,7 +7607,7 @@ ul.service-list li:last-of-type a {
   border: none;
   color: #eeeef2;
   cursor: pointer;
-  font-family: TT Lakes Neue, Impact, sans-serif;
+  font-family: "Rajdhani", Impact, sans-serif;
   font-size: 12px;
   font-weight: 400;
   padding: 2em 4em;
@@ -8387,7 +8349,7 @@ ul.service-list li:last-of-type a {
 
   #menu-slide #links div:nth-of-type(2) a {
     display: inline-block;
-    font-family: TT Lakes Neue, Impact, sans-serif;
+    font-family: "Rajdhani", Impact, sans-serif;
     font-size: 18px;
     font-weight: 400;
     line-height: 1.2;
