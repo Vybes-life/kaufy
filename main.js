@@ -1386,7 +1386,7 @@ e.forEach((slide, index) => {
             });
         });
       const h = new FontFaceObserver("Inter"),
-        v = new FontFaceObserver("TT Tunnels Bold");
+        v = new FontFaceObserver("Sofia Sans Extra Condensed");
       if (
         (Promise.all([h.load(), v.load()]).then(function () {
           let e = new SplitText(".split.chars", { type: "lines, chars" }),
