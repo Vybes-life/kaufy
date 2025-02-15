@@ -1,4 +1,525 @@
 
+class ConfettiBurst {
+  constructor(options = {}) {
+    this.options = {
+      confettiCount: options.confettiCount || 20,
+      sequinCount: options.sequinCount || 10,
+      gravityConfetti: options.gravityConfetti || 0.3,
+      gravitySequins: options.gravitySequins || 0.55,
+      dragConfetti: options.dragConfetti || 0.075,
+      colors: options.colors || [
+        { front: '#7b5cff', back: '#6245e0' },
+        { front: '#b3c7ff', back: '#8fa5e5' },
+        { front: '#5c86ff', back: '#345dd1' }
+      ]
+    };
+
+    this.canvas = document.createElement('canvas');
+    this.ctx = this.canvas.getContext('2d');
+    this.confetti = [];
+    this.sequins = [];
+    
+    // Setup canvas
+    this.canvas.style.position = 'fixed';
+    this.canvas.style.top = '0';
+    this.canvas.style.left = '0';
+    this.canvas.style.pointerEvents = 'none';
+    this.canvas.style.zIndex = '1000';
+    document.body.appendChild(this.canvas);
+    
+    this.resizeCanvas();
+    window.addEventListener('resize', () => this.resizeCanvas());
+  }
+
+  createConfetti(element) {
+    const rect = element.getBoundingClientRect();
+    const centerX = rect.left + rect.width / 2;
+    const centerY = rect.top + rect.height / 2;
+
+    for (let i = 0; i < this.options.confettiCount; i++) {
+      this.confetti.push(new Confetto(
+        centerX, 
+        centerY, 
+        rect.width, 
+        this.options.colors,
+        this.options.gravityConfetti,
+        this.options.dragConfetti
+      ));
+    }
+
+    for (let i = 0; i < this.options.sequinCount; i++) {
+      this.sequins.push(new Sequin(
+        centerX,
+        centerY,
+        rect.width,
+        this.options.colors,
+        this.options.gravitySequins
+      ));
+    }
+
+    if (!this.isAnimating) {
+      this.isAnimating = true;
+      this.animate();
+    }
+  }
+
+  resizeCanvas() {
+    this.canvas.width = window.innerWidth;
+    this.canvas.height = window.innerHeight;
+  }
+
+  animate() {
+    this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+
+    [...this.confetti, ...this.sequins].forEach(particle => {
+      particle.update();
+      particle.draw(this.ctx);
+    });
+
+    this.confetti = this.confetti.filter(confetto => confetto.position.y < this.canvas.height);
+    this.sequins = this.sequins.filter(sequin => sequin.position.y < this.canvas.height);
+
+    if (this.confetti.length || this.sequins.length) {
+      requestAnimationFrame(() => this.animate());
+    } else {
+      this.isAnimating = false;
+    }
+  }
+}
+
+// Particle classes
+class Confetto {
+  constructor(centerX, centerY, elementWidth, colors, gravity, drag) {
+    this.randomModifier = Math.random() * 99;
+    this.color = colors[Math.floor(Math.random() * colors.length)];
+    this.dimensions = {
+      x: Math.random() * (6 - 4) + 4,
+      y: Math.random() * (9 - 7) + 7,
+    };
+    this.position = {
+      x: centerX + (Math.random() - 0.5) * elementWidth,
+      y: centerY
+    };
+    this.rotation = Math.random() * 2 * Math.PI;
+    this.scale = { x: 1, y: 1 };
+    this.velocity = this.initVelocity();
+    this.gravity = gravity;
+    this.drag = drag;
+  }
+
+  initVelocity() {
+    return {
+      x: (Math.random() - 0.5) * 18,
+      y: Math.random() * -15 - 5
+    };
+  }
+
+  update() {
+    this.velocity.x -= this.velocity.x * this.drag;
+    this.velocity.y = Math.min(this.velocity.y + this.gravity, 3);
+    this.position.x += this.velocity.x;
+    this.position.y += this.velocity.y;
+    this.scale.y = Math.cos((this.position.y + this.randomModifier) * 0.09);
+  }
+
+  draw(ctx) {
+    ctx.save();
+    ctx.translate(this.position.x, this.position.y);
+    ctx.rotate(this.rotation);
+    const width = this.dimensions.x * this.scale.x;
+    const height = this.dimensions.y * this.scale.y;
+    ctx.fillStyle = this.scale.y > 0 ? this.color.front : this.color.back;
+    ctx.fillRect(-width / 2, -height / 2, width, height);
+    ctx.restore();
+  }
+}
+
+class Sequin {
+  constructor(centerX, centerY, elementWidth, colors, gravity) {
+    this.color = colors[Math.floor(Math.random() * colors.length)].back;
+    this.radius = Math.random() * (2 - 1) + 1;
+    this.position = {
+      x: centerX + (Math.random() - 0.5) * elementWidth,
+      y: centerY
+    };
+    this.velocity = {
+      x: (Math.random() - 0.5) * 12,
+      y: Math.random() * -10 - 8
+    };
+    this.gravity = gravity;
+  }
+
+  update() {
+    this.velocity.y += this.gravity;
+    this.position.x += this.velocity.x;
+    this.position.y += this.velocity.y;
+  }
+
+  draw(ctx) {
+    ctx.save();
+    ctx.translate(this.position.x, this.position.y);
+    ctx.fillStyle = this.color;
+    ctx.beginPath();
+    ctx.arc(0, 0, this.radius, 0, 2 * Math.PI);
+    ctx.fill();
+    ctx.restore();
+  }
+}
+
+class ParticleAnimation {
+  constructor(options = {}) {
+    this.canvas = document.createElement('canvas');
+    this.ctx = this.canvas.getContext('2d');
+    this.particles = [];
+    this.isAnimating = false;
+    
+    // Setup canvas
+    this.canvas.style.position = 'fixed';
+    this.canvas.style.top = '0';
+    this.canvas.style.left = '0';
+    this.canvas.style.pointerEvents = 'none';
+    this.canvas.style.zIndex = '1000';
+    document.body.appendChild(this.canvas);
+    
+    this.resizeCanvas();
+    window.addEventListener('resize', () => this.resizeCanvas());
+  }
+
+  resizeCanvas() {
+    this.canvas.width = window.innerWidth;
+    this.canvas.height = window.innerHeight;
+  }
+
+  animate() {
+    this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+    this.particles.forEach(particle => {
+      particle.update();
+      particle.draw(this.ctx);
+    });
+
+    this.particles = this.particles.filter(p => p.isAlive());
+
+    if (this.particles.length) {
+      requestAnimationFrame(() => this.animate());
+    } else {
+      this.isAnimating = false;
+    }
+  }
+}
+
+class Heart {
+  constructor(x, y, color) {
+    this.x = x;
+    this.startY = y; // record starting position
+    this.y = y;
+    this.color = color || 'rgba(204,42,93,1)';
+    this.size = Math.random() * 10 + 5;
+    this.life = 1; // starts at 1 and decays to 0
+    this.opacity = 0;
+    // Random upward speed between 1 and 2.5 pixels per frame
+    this.speed = Math.random() * 1.5 + 1;
+  }
+
+  update() {
+    // Decay life over time – adjust the decay rate to mimic a ~3s duration
+    this.life -= 0.005;
+    const progress = 1 - this.life; // progress from 0 to 1
+
+    // Instead of forcing all hearts to cover the entire viewport,
+    // update y by subtracting the random speed, so hearts take varied time to rise.
+    this.y -= this.speed;
+
+    // Opacity: fade in during the first 20% of the progress, then fade out
+    if (progress < 0.2) {
+      this.opacity = (progress / 0.2) * 0.8;
+    } else {
+      this.opacity = 0.8 * (1 - (progress - 0.2) / 0.8);
+    }
+    if (this.opacity < 0) this.opacity = 0;
+  }
+
+  draw(ctx) {
+    ctx.save();
+    ctx.translate(this.x, this.y);
+    ctx.beginPath();
+    const s = this.size;
+    // Draw a classic love-heart shape using Bézier curves
+    ctx.moveTo(0, -s / 2);
+    ctx.bezierCurveTo(-s, -s, -s, s / 4, 0, s);
+    ctx.bezierCurveTo(s, s / 4, s, -s, 0, -s / 2);
+    ctx.closePath();
+    ctx.fillStyle = `rgba(204,42,93,${this.opacity})`;
+    ctx.fill();
+    ctx.restore();
+  }
+
+  isAlive() {
+    return this.life > 0;
+  }
+}
+
+class HeartAnimation extends ParticleAnimation {
+  createEffect(element, options = {}) {
+    const rect = element.getBoundingClientRect();
+    const count = options.count || 10;
+    
+    for (let i = 0; i < count; i++) {
+      // Each heart gets a random y between the top and bottom of the element
+      const startY = rect.top + Math.random() * rect.height;
+      this.particles.push(new Heart(
+        rect.left + Math.random() * rect.width,
+        startY,
+        options.color || 'rgba(204, 42, 93, 1)'
+      ));
+    }
+
+    if (!this.isAnimating) {
+      this.isAnimating = true;
+      this.animate();
+    }
+  }
+}
+
+
+
+class FireAnimation extends ParticleAnimation {
+  createEffect(element, options = {}) {
+    const rect = element.getBoundingClientRect();
+    const count = options.count || 20;
+    const quarterHeight = rect.height / 4;
+    
+    // Initial burst of fire particles
+    for (let i = 0; i < count; i++) {
+      this.particles.push(new Fire(
+        rect.left + Math.random() * rect.width,
+        rect.bottom - Math.random() * quarterHeight,
+        options.color || 'rgba(255, 193, 7, 0.8)',
+        quarterHeight
+      ));
+    }
+    
+    // Persistent burning: spawn additional particles for a few seconds at the bottom of the element
+    const persistentDuration = options.duration || 3000;    // Duration in milliseconds (default 3000 ms)
+    const spawnInterval = options.spawnInterval || 300;       // Interval in ms between spawns (default 300 ms)
+    const persistentCount = options.persistentCount || 5;     // Number of particles spawned each interval
+    
+    const intervalId = setInterval(() => {
+      for (let i = 0; i < persistentCount; i++) {
+        this.particles.push(new Fire(
+          rect.left + Math.random() * rect.width,
+          rect.bottom - Math.random() * quarterHeight,
+          options.color || 'rgba(255, 193, 7, 0.8)',
+          quarterHeight
+        ));
+      }
+    }, spawnInterval);
+    
+    setTimeout(() => {
+      clearInterval(intervalId);
+    }, persistentDuration);
+    
+    if (!this.isAnimating) {
+      this.isAnimating = true;
+      this.animate();
+    }
+  }
+}
+
+class Fire {
+  constructor(x, y, color, maxHeight) {
+    this.x = x;
+    this.y = y;
+    this.color = color;
+    this.maxHeight = maxHeight;
+    this.size = Math.random() * 8 + 4;
+    this.velocity = {
+      x: (Math.random() - 0.5) * 2,
+      y: -Math.random() * 3 - 2
+    };
+    this.life = 1;
+    this.decay = Math.random() * 0.02 + 0.02;
+  }
+
+  update() {
+    this.x += this.velocity.x;
+    this.y += this.velocity.y;
+    this.velocity.y += 0.05; // Gravity effect
+    this.life -= this.decay;
+    this.size *= 0.95;
+  }
+
+  draw(ctx) {
+    ctx.save();
+    ctx.beginPath();
+    
+    const gradient = ctx.createRadialGradient(
+      this.x, this.y, 0,
+      this.x, this.y, this.size
+    );
+    
+    gradient.addColorStop(0, 'rgba(255, 193, 7, ' + this.life + ')');
+    gradient.addColorStop(0.5, 'rgba(255, 140, 0, ' + (this.life * 0.5) + ')');
+    gradient.addColorStop(1, 'rgba(255, 0, 0, 0)');
+    
+    ctx.fillStyle = gradient;
+    ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.restore();
+  }
+
+  isAlive() {
+    return this.life > 0 && this.y <= this.y + this.maxHeight;
+  }
+}
+
+
+class BubbleAnimation extends ParticleAnimation {
+  createEffect(element, options = {}) {
+    const rect = element.getBoundingClientRect();
+    const count = options.count || 15;
+    
+    for (let i = 0; i < count; i++) {
+      this.particles.push(new Bubble(
+        rect.left + Math.random() * rect.width,
+        rect.bottom,
+        options.color || 'rgba(255, 255, 255, 0.8)'
+      ));
+    }
+
+    if (!this.isAnimating) {
+      this.isAnimating = true;
+      this.animate();
+    }
+  }
+}
+
+
+
+class Bubble {
+  constructor(x, y, color) {
+    this.x = x;
+    this.y = y;
+    this.color = color;
+    this.size = Math.random() * 8 + 4;
+    this.velocity = {
+      x: (Math.random() - 0.5) * 2,
+      y: -Math.random() * 2 - 1
+    };
+    this.wobble = 0;
+    this.wobbleSpeed = Math.random() * 0.1 + 0.05;
+  }
+
+  update() {
+    this.x += Math.sin(this.wobble) * 0.5;
+    this.y += this.velocity.y;
+    this.wobble += this.wobbleSpeed;
+  }
+
+  draw(ctx) {
+    ctx.save();
+    ctx.beginPath();
+    ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+    ctx.fillStyle = this.color;
+    ctx.strokeStyle = 'rgba(255, 255, 255, 0.5)';
+    ctx.lineWidth = 2;
+    ctx.fill();
+    ctx.stroke();
+    
+    // Bubble shine
+    ctx.beginPath();
+    ctx.arc(this.x - this.size/3, this.y - this.size/3, this.size/4, 0, Math.PI * 2);
+    ctx.fillStyle = 'rgba(255, 255, 255, 0.8)';
+    ctx.fill();
+    ctx.restore();
+  }
+
+  isAlive() {
+    return this.y + this.size > 0;
+  }
+}
+
+class ChatBubble {
+  constructor(element, imageSrc, linkUrl) {
+      // Get the element's size and position.
+      this.element = element;
+      this.rect = element.getBoundingClientRect();
+
+      // Increase bubble height to show the full image (extra 20px in height)
+      this.bubbleHeight = this.rect.height + 100;
+
+      // Create the chat bubble container.
+      this.chatBubble = document.createElement('div');
+      this.chatBubble.style.position = 'absolute';
+      this.chatBubble.style.left = this.rect.left + 'px';
+      this.chatBubble.style.top = this.rect.top + 'px';
+      this.chatBubble.style.width = this.rect.width + 'px';
+      this.chatBubble.style.height = this.bubbleHeight + 'px';
+      this.chatBubble.style.zIndex = '9999';
+
+      // Beautify the chat bubble.
+      this.chatBubble.style.border = '2px solid #333';
+      this.chatBubble.style.borderRadius = '10px';
+      this.chatBubble.style.overflow = 'hidden';
+      this.chatBubble.style.backgroundColor = '#fff';
+      this.chatBubble.style.boxShadow = '0 4px 8px rgba(0, 0, 0, 0.2)';
+
+      // Create image element.
+      this.img = document.createElement('img');
+      this.img.src = imageSrc;
+      this.img.style.width = '100%';
+      this.img.style.height = '100%';
+      this.img.style.objectFit = 'contain';
+
+      // If a link URL is provided, wrap the image inside an anchor tag.
+      if (linkUrl) {
+          this.anchor = document.createElement('a');
+          this.anchor.href = linkUrl;
+          this.anchor.target = '_blank';
+          this.anchor.style.display = 'block';
+          this.anchor.appendChild(this.img);
+          this.chatBubble.appendChild(this.anchor);
+      } else {
+          this.chatBubble.appendChild(this.img);
+      }
+
+      // Add the chat bubble to the document.
+      document.body.appendChild(this.chatBubble);
+
+      // Animation variables.
+      this.startTop = this.rect.top;
+      this.targetTop = this.rect.top - this.bubbleHeight - 15;
+      this.duration = 500; // Animation duration in milliseconds.
+      this.startTime = null;
+
+      // Bind the animate method.
+      this.animate = this.animate.bind(this);
+
+      // Start the animation.
+      requestAnimationFrame(this.animate);
+
+      // Automatically remove the chat bubble after 15 seconds.
+      setTimeout(() => {
+          if (this.chatBubble.parentNode) {
+              this.chatBubble.parentNode.removeChild(this.chatBubble);
+          }
+      }, 15000);
+  }
+
+  animate(timestamp) {
+      if (!this.startTime) {
+          this.startTime = timestamp;
+      }
+      const elapsed = timestamp - this.startTime;
+      const progress = Math.min(elapsed / this.duration, 1);
+      // Ease-out cubic effect.
+      const easeOut = 1 - Math.pow(1 - progress, 3);
+      const newTop = this.startTop - (this.startTop - this.targetTop) * easeOut;
+      this.chatBubble.style.top = newTop + 'px';
+      if (progress < 1) {
+          requestAnimationFrame(this.animate);
+      }
+  }
+}
 
 
 
@@ -30,6 +551,45 @@
             '_blank'
           );
         },
+        displayProduct: ({ image, link }) => {
+          new ChatBubble(widget, image, link);
+          console.log("worked");
+        },
+        sucess_Confetti:({deal})=>{
+          if(deal==true){
+            const confettiBurst = new ConfettiBurst();
+            confettiBurst.createConfetti(document.querySelector('kaufy-ai'));
+            
+          }
+        },
+        heartsAnimation:({love})=>{
+          if(love==true){
+            const hearts = new HeartAnimation();
+            hearts.createEffect(document.querySelector('kaufy-ai'), {
+              count: 15,
+              color: '#ff6b6b'
+            });
+            console.log('worked');
+          }  
+        },
+        fireAnimation:({hot})=>{
+          if(hot==true){
+            const fire = new FireAnimation();
+            fire.createEffect(document.querySelector('kaufy-ai'), {
+              count: 20,
+              color: 'rgba(255, 193, 7, 0.8)'
+            });
+        }},
+
+        bubbleAnimation:({cool})=>{
+          if(cool==true){
+            const bubble = new BubbleAnimation();
+            bubble.createEffect(document.querySelector('kaufy-ai'), {
+              count: 20,
+              color: 'rgba(33,150,243,0.5)' 
+            });
+        }}
+
       };
     });
   }
@@ -3037,7 +3597,7 @@ void main() {
     dr = 0,
     ja = new Float32Array([-1, 1, -1, -1, 1, 1, 1, -1]),
     qa =
-      "https://storage.googleapis.com/eleven-public-cdn/images/perlin-noise.png",
+      "https://kaufy.tech/perlin-noise.png",
     we = class we {
       constructor(t) {
         Ne(this, "gl");
