@@ -555,6 +555,10 @@ class ChatBubble {
           new ChatBubble(widget, image, link);
           console.log("worked");
         },
+        displayTeam: ({ image, link }) => {
+          new ChatBubble(widget, image, link);
+          
+        },
         sucess_Confetti:({deal})=>{
           if(deal==true){
             const confettiBurst = new ConfettiBurst();
