@@ -559,6 +559,10 @@ class ChatBubble {
           new ChatBubble(widget, image, link);
           
         },
+        displayCompany: ({ image, link }) => {
+          new ChatBubble(widget, image, link);
+          
+        },
         sucess_Confetti:({deal})=>{
           if(deal==true){
             const confettiBurst = new ConfettiBurst();
